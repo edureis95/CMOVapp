@@ -2,6 +2,7 @@ package com.cmov.acme.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cmov.acme.R;
@@ -16,13 +17,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static String TAG = "RESPONSE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.70/")
+                .baseUrl("http://10.0.2.2:3000")
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
@@ -33,11 +36,13 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Product>(){
             @Override
             public void onResponse(Call<Product> call, Response<Product> response) {
-                Product product = response.body();            }
+                Log.i(TAG, response.toString());
+                Log.i(TAG, "GREAT");
+            }
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "ERROR");
             }
         });
 

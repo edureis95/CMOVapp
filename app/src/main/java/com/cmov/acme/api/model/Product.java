@@ -1,5 +1,7 @@
 package com.cmov.acme.api.model;
 
+import android.util.Log;
+
 /**
  * Created by Ricardo on 24-Oct-17.
  */
@@ -18,4 +20,5 @@ public class Product {
         this.maker = maker;
         this.model = model;
     }
+
 }
