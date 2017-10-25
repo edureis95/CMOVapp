@@ -1,50 +1,73 @@
 package com.cmov.acme.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.cmov.acme.R;
-import com.cmov.acme.api.model.Product;
-import com.cmov.acme.api.service.Client;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static String TAG = "RESPONSE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000")
-                .addConverterFactory(GsonConverterFactory.create());
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
 
-        Retrofit retrofit = builder.build();
-        Client client = retrofit.create(Client.class);
+        /*  LOGIN
 
-        Call<Product> call = client.getProduct("61234567890"); //codigo de barras de um produto
+        Login_service loginService = retrofit.create(Login_service.class);
+        LoginRequest request = new LoginRequest("maurr","cenas");
+        Call<LoginResponse> call = loginService.sendLogin(request);
 
-        call.enqueue(new Callback<Product>(){
+
+        call.enqueue(new Callback<LoginResponse>() {
+                         @Override
+                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                             if(response.isSuccessful() && response.body().getToken() != null) {
+                                 Log.i(TAG, "token = " + response.body().getToken());
+                             } else {
+                                 Log.i(TAG, "Unsuccessful login");
+                             }
+                         }
+
+                         @Override
+                         public void onFailure(Call<LoginResponse> call, Throwable t) {
+                             Log.i(TAG, t.getMessage());
+                         }
+                     });
+
+    }
+    */
+
+
+        /* REGISTER
+
+        Register_service register_service = retrofit.create(Register_service.class);
+        RegisterRequest request = new RegisterRequest("Mauro Rodrigues","maurrea","cenas","123131","britiande","121331","2131313","visa","10/12/1994");
+        Call<RegisterResponse> call = register_service.sendRegister(request);
+
+
+        call.enqueue(new Callback<RegisterResponse>() {
             @Override
-            public void onResponse(Call<Product> call, Response<Product> response) {
-                Log.i(TAG, response.toString());
-                Log.i(TAG, "GREAT");
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                if(response.isSuccessful() && response.body().getToken() != null) {
+                    Log.i(TAG, "token = " + response.body().getToken());
+                } else {
+                    Log.i(TAG, "Unsuccessful register");
+                }
             }
 
             @Override
-            public void onFailure(Call<Product> call, Throwable t) {
-                Log.i(TAG, "ERROR");
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                Log.i(TAG, t.getMessage());
             }
         });
-
+    */
     }
 }
