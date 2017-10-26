@@ -1,5 +1,7 @@
 package com.cmov.acme.ui;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,9 @@ import com.cmov.acme.R;
 import com.cmov.acme.api.model.request.LoginRequest;
 import com.cmov.acme.api.model.response.LoginResponse;
 import com.cmov.acme.api.service.Login_service;
+import com.cmov.acme.singletons.RetrofitSingleton;
+import com.cmov.acme.singletons.User;
+import com.cmov.acme.utils.ShowDialog;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText password_text;
     private EditText username_text;
+    private ShowDialog dialog;
 
 
     @Override
@@ -35,15 +41,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        dialog = new ShowDialog();
 
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000")
-                .addConverterFactory(GsonConverterFactory.create());
+        retrofit = RetrofitSingleton.getInstance();
 
-         retrofit = builder.build();
 
         login_button = (Button) findViewById(R.id.loginButton);
         login_button.setOnClickListener(loginHandler);
+
+
 
         password_text = (EditText) findViewById(R.id.password_text);
         username_text = (EditText) findViewById(R.id.username_text);
@@ -64,9 +70,11 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     if(response.isSuccessful() && response.body().getToken() != null) {
-                        Log.i(TAG, "token = " + response.body().getToken());
+                        User user =  User.getInstance();
+                        user.setToken(response.body().getToken());
+                        dialog.showDialog(LoginActivity.this,user.getToken());
                     } else {
-                        Log.i(TAG, "Unsuccessful login");
+                        dialog.showDialog(LoginActivity.this, "Unsuccessful login");
                     }
                     progressBar.setVisibility(View.INVISIBLE);
                 }
@@ -74,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<LoginResponse> call, Throwable t) {
-                    Log.i(TAG, t.getMessage());
+                    dialog.showDialog(LoginActivity.this, "Unable to connect to  the server. Try again later.");
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
