@@ -1,6 +1,7 @@
 package com.cmov.acme.ui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final static String TAG = "RESPONSE";
     private Retrofit retrofit;
 
     private Button login_button;
@@ -72,7 +72,10 @@ public class LoginActivity extends AppCompatActivity {
                     if(response.isSuccessful() && response.body().getToken() != null) {
                         User user =  User.getInstance();
                         user.setToken(response.body().getToken());
-                        dialog.showDialog(LoginActivity.this,user.getToken());
+                       // dialog.showDialog(LoginActivity.this,user.getToken());
+                        Intent intent = new Intent(LoginActivity.this, PastTransactions.class);
+                        startActivity(intent);
+                        //  finish();
                     } else {
                         dialog.showDialog(LoginActivity.this, "Unsuccessful login");
                     }
