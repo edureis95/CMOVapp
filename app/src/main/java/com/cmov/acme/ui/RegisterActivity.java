@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         dialog = new ShowDialog();
-        
+
         retrofit = RetrofitSingleton.getInstance();
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
