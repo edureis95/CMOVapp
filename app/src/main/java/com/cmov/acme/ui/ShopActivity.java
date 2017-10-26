@@ -30,7 +30,7 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Here, thisActivity is the current activity
-                if (ContextCompat.checkSelfPermission(ShopActivity.this,
+               /* if (ContextCompat.checkSelfPermission(ShopActivity.this,
                         Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
                     // Should we show an explanation?
@@ -44,7 +44,10 @@ public class ShopActivity extends AppCompatActivity {
                 } else {
                     IntentIntegrator integrator = new IntentIntegrator(activity);
                     integrator.initiateScan();
-                }
+                }*/
+                Intent intent = new Intent(ShopActivity.this, ProductActivity.class);
+                intent.putExtra("bar_code", "61234567890");
+                startActivity(intent);
             }
         });
     }
@@ -73,6 +76,9 @@ public class ShopActivity extends AppCompatActivity {
             }
             else{
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ShopActivity.this, ProductActivity.class);
+                intent.putExtra(getString(R.string.barCode), result.getContents());
+                startActivity(intent);
             }
         }
         else{

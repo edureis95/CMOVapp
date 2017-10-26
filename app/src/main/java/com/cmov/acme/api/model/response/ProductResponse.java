@@ -24,6 +24,26 @@ public class ProductResponse {
     @SerializedName("model")
     private String model;
 
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getBar_code() {
+        return bar_code;
+    }
+
+    public String getMaker() {
+        return maker;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
     public ProductResponse(String name, int price, String bar_code, String maker, String model) {
         this.name = name;
         this.price = price;
