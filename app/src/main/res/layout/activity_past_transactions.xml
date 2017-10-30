@@ -6,4 +6,49 @@
     android:layout_height="match_parent"
     tools:context="com.cmov.acme.ui.PastTransactions">
 
+    <RelativeLayout
+        android:layout_width="358dp"
+        android:layout_height="475dp"
+        tools:layout_editor_absoluteX="13dp"
+        tools:layout_editor_absoluteY="18dp">
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="370dp"
+            android:layout_height="380dp"
+            tools:layout_editor_absoluteX="-23dp"
+            tools:layout_editor_absoluteY="142dp"
+            android:layout_below="@+id/text_compra"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:id="@+id/text_compra"
+            android:layout_width="340dp"
+            android:layout_height="43dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="29dp"
+            android:layout_marginRight="29dp"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="30sp"
+            tools:layout_editor_absoluteX="7dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/text_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/text_compra"
+            android:layout_alignRight="@+id/text_compra"
+            android:layout_below="@+id/listview"
+            android:layout_marginEnd="66dp"
+            android:layout_marginRight="66dp"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="24sp" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

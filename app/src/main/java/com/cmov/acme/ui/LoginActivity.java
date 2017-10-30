@@ -72,8 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(response.isSuccessful() && response.body().getToken() != null) {
                         User user =  User.getInstance();
                         user.setToken(response.body().getToken());
-                       // dialog.showDialog(LoginActivity.this,user.getToken());
-                        Intent intent = new Intent(LoginActivity.this, PastTransactions.class);
+                        Intent intent = new Intent(LoginActivity.this, ReceiptsActivity.class);
                         startActivity(intent);
                         //  finish();
                     } else {

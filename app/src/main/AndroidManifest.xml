@@ -29,7 +29,8 @@
             android:label="@string/title_activity_login1" />
         <activity android:name=".ui.ShopActivity" />
         <activity android:name=".ui.RegisterActivity" />
-        <activity android:name=".ui.PastTransactions"></activity>
+        <activity android:name=".ui.PastTransactions" />
+        <activity android:name=".ui.ReceiptsActivity"></activity>
     </application>
 
 </manifest>
