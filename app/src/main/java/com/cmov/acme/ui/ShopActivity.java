@@ -1,32 +1,76 @@
 package com.cmov.acme.ui;
 
-import android.Manifest;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cmov.acme.R;
+import com.cmov.acme.models.Product;
+import com.cmov.acme.models.ProductList;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import java.util.List;
 
 public class ShopActivity extends AppCompatActivity {
 
     private Button scan_button;
+    private List<Product> products;
+    private final static String TAG = "TESTE";
+    private ProductAdapter adapter = null;
+    private ListView productListView;
+    private TextView total_cost;
+
+    public void removeFromProductsList(String name){
+        for(int i = 0; i < products.size(); i++){
+            if(name.equals(products.get(i).getName())){
+                products.remove(i);
+            }
+        }
+    }
+
+    public void opensProduct(){
+        Intent intent = new Intent(ShopActivity.this, ProductActivity.class);
+        intent.putExtra("bar_code", "61234567890");
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            Bundle bundle = data.getExtras();
+            Product product = (Product)bundle.getSerializable("Product");
+            adapter.add(product);
+            adapter.addCost();
+            setTotalCost(adapter.getTotal_cost());
+        }
+    }
+
+    public void setTotalCost(int cost){
+        total_cost.setText(Integer.toString(cost));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
         scan_button = (Button)findViewById(R.id.scan_button);
+        total_cost = (TextView)findViewById(R.id.list_total_cost);
+        total_cost.setText("0");
         final Activity activity = this;
-        scan_button.setOnClickListener(new View.OnClickListener(){
+
+        adapter = new ProductAdapter(this, android.R.layout.simple_list_item_1, ProductList.list_products);
+        ListView productListView = (ListView) findViewById(R.id.product_list_view);
+        productListView.setAdapter(adapter);
+
+
+                scan_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 // Here, thisActivity is the current activity
@@ -45,9 +89,7 @@ public class ShopActivity extends AppCompatActivity {
                     IntentIntegrator integrator = new IntentIntegrator(activity);
                     integrator.initiateScan();
                 }*/
-                Intent intent = new Intent(ShopActivity.this, ProductActivity.class);
-                intent.putExtra("bar_code", "61234567890");
-                startActivity(intent);
+                opensProduct();
             }
         });
     }
@@ -66,7 +108,7 @@ public class ShopActivity extends AppCompatActivity {
             }
         }
     }
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -84,5 +126,5 @@ public class ShopActivity extends AppCompatActivity {
         else{
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
+    }*/
 }
