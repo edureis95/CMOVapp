@@ -7,33 +7,34 @@
     tools:context="com.cmov.acme.ui.ReceiptsActivity">
 
     <RelativeLayout
+        android:id="@+id/transactionsview"
         android:layout_width="360dp"
         android:layout_height="480dp"
-        tools:layout_editor_absoluteY="15dp"
-        tools:layout_editor_absoluteX="6dp">
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="15dp">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:text="Past transactions"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="30sp"
-            tools:text="Past transactions"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            tools:text="Past transactions" />
 
         <ListView
             android:id="@+id/listview"
             android:layout_width="368dp"
             android:layout_height="495dp"
-            tools:layout_editor_absoluteX="50dp"
-            tools:layout_editor_absoluteY="146dp"
-            android:layout_below="@+id/textView2"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="27dp" />
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="27dp"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="146dp" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
