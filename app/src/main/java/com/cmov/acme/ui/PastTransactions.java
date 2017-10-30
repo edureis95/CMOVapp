@@ -1,9 +1,12 @@
 package com.cmov.acme.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cmov.acme.R;
@@ -28,6 +31,9 @@ public class PastTransactions extends AppCompatActivity {
     private ListView listView;
     private String id;
     private TextView totalPrice;
+    private ProgressBar progressBar;
+    private View transactionsview;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,9 @@ public class PastTransactions extends AppCompatActivity {
 
         listaResposta = new ArrayList<PastTransactionsResponse>();
 
+        transactionsview = findViewById(R.id.transactionview);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
+
         listView = (ListView) findViewById(R.id.listview);
 
         TextView name = (TextView) findViewById(R.id.text_compra);
@@ -49,6 +58,7 @@ public class PastTransactions extends AppCompatActivity {
 
         totalPrice = (TextView) findViewById(R.id.text_price);
 
+        showProgress(true);
 
         retrofit = RetrofitSingleton.getInstance();
         PastTransactions_service transactions_service = retrofit.create(PastTransactions_service.class);
@@ -67,9 +77,11 @@ public class PastTransactions extends AppCompatActivity {
                         price += Double.parseDouble(r.getPrice())*Double.parseDouble(r.getQuantity());
                     }
                     totalPrice.setText("Total Price: " + price+"€");
+                    showProgress(false);
 
                 } else {
                     dialog.showDialog(PastTransactions.this, response.toString());
+                    finish();
                 }
             }
 
@@ -77,9 +89,17 @@ public class PastTransactions extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<PastTransactionsResponse>>  call, Throwable t) {
                 dialog.showDialog(PastTransactions.this, t.getMessage().toString());
+                finish();
 
             }
+
         });
 
+    }
+
+
+    private void showProgress(final boolean show) {
+        transactionsview.setVisibility(show ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 }

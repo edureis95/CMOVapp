@@ -8,29 +8,50 @@
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
-    <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout"
-        tools:layout_editor_absoluteY="107dp"
-        tools:layout_editor_absoluteX="8dp">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="108dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_weight="0.17"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/username_text"
+    <RelativeLayout
+        android:id="@+id/login"
+        android:layout_width="379dp"
+        android:layout_height="325dp"
+        tools:layout_editor_absoluteX="3dp"
+        tools:layout_editor_absoluteY="25dp">
+
+        <Button
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:layout_weight="0.17"
-            android:ems="10"
-            android:hint="Username"
-            android:inputType="textPersonName"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/password_text"
+            android:layout_marginTop="20dp"
+            android:text="Login"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="67dp" />
+            tools:layout_editor_absoluteY="223dp" />
 
         <EditText
             android:id="@+id/password_text"
             android:layout_width="match_parent"
             android:layout_height="52dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/username_text"
+            android:layout_marginTop="21dp"
             android:layout_weight="0.19"
             android:ems="10"
             android:hint="Password"
@@ -38,24 +59,20 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="82dp" />
 
-        <Button
-            android:id="@+id/loginButton"
+        <EditText
+            android:id="@+id/username_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="223dp" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="86dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
             android:layout_weight="0.17"
+            android:ems="10"
+            android:hint="Username"
+            android:inputType="textPersonName"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="260dp"
-            tools:visibility="invisible" />
-
-    </LinearLayout>
+            tools:layout_editor_absoluteY="67dp" />
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

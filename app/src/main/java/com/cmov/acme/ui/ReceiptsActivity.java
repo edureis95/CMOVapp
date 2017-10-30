@@ -2,7 +2,9 @@ package com.cmov.acme.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.cmov.acme.R;
 import com.cmov.acme.api.model.response.ReceiptResponse;
@@ -24,6 +26,7 @@ public class ReceiptsActivity extends AppCompatActivity {
     private ArrayList<ReceiptResponse> listaResposta;
     private ListView listView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,6 @@ public class ReceiptsActivity extends AppCompatActivity {
         listaResposta = new ArrayList<ReceiptResponse>();
         dialog = new ShowDialog();
         listView = (ListView) findViewById(R.id.listview);
-
         retrofit = RetrofitSingleton.getInstance();
         Receipts_service receipts_service = retrofit.create(Receipts_service.class);
         Call<ArrayList<ReceiptResponse>> call = receipts_service.getReceipts("Bearer "+ User.getInstance().getToken());
@@ -57,4 +59,6 @@ public class ReceiptsActivity extends AppCompatActivity {
         });
 
     }
+
+
 }
