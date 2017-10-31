@@ -15,4 +15,5 @@
         completions."
     </string>
     <string name="barCode">bar_code</string>
+    <string name="title_activity_login33">Sign in</string>
 </resources>
