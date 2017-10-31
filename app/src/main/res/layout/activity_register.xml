@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
         android:layout_marginTop="60dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/register_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -91,8 +91,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:clickable="false"
+            android:focusable="false"
             android:hint="Credit card validity"
-            android:inputType="date" />
+            />
 
         <Button
             android:id="@+id/register_button"

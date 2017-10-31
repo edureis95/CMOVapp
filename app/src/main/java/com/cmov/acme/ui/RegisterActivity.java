@@ -1,5 +1,6 @@
 package com.cmov.acme.ui;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -28,6 +30,9 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private String publicKey;
     private String privateKey;
+    private Calendar myCalendar;
+    private DatePickerDialog.OnDateSetListener date;
 
 
     @Override
@@ -151,7 +158,39 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+        myCalendar = Calendar.getInstance();
+         date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        input_creditcardvalidity.setKeyListener(null);
+
+        input_creditcardvalidity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(RegisterActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
     }
+
+    private void updateLabel() {
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+        input_creditcardvalidity.setText(sdf.format(myCalendar.getTime()));
+    };
 
     private void showProgress(final boolean show) {
         register.setVisibility(show ? View.GONE : View.VISIBLE);
