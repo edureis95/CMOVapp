@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +36,9 @@ public class ProductAdapter extends ArrayAdapter<Product>{
     private TextView product_quantity;
 
 
-    private ImageButton button_delete;
-    private ImageButton button_add;
-    private ImageButton button_substract;
+    private Button button_delete;
+    private Button button_add;
+    private Button button_substract;
 
     private List<Product> products;
     private int total_cost=0;
@@ -76,14 +77,14 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         list_product_model.setText(product_model);
 
 
-        button_delete = (ImageButton)custom_view.findViewById(R.id.button_delete);
+        button_delete = (Button)custom_view.findViewById(R.id.button_delete);
         button_delete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 deleteProduct(position);
             }});
 
-        button_add = (ImageButton)custom_view.findViewById(R.id.button_add);
+        button_add = (Button)custom_view.findViewById(R.id.button_add);
 
         button_add.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -96,7 +97,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                 notifyDataSetChanged();
             }});
 
-        button_substract = (ImageButton)custom_view.findViewById(R.id.button_subtract);
+        button_substract = (Button)custom_view.findViewById(R.id.button_subtract);
         button_substract.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -139,7 +140,6 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                 ((ShopActivity)context).setTotalCost(total_cost);
                 notifyDataSetChanged();
                 return;
-                
             }
         }
         product.addQuantity();

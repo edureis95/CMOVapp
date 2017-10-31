@@ -29,13 +29,15 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:text="ShopList"
             android:textSize="30sp"
             tools:layout_editor_absoluteX="134dp"
-            tools:layout_editor_absoluteY="16dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            tools:layout_editor_absoluteY="16dp" />
 
         <Button
             android:id="@+id/scan_button"
@@ -74,11 +76,12 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  €"
-            android:layout_toRightOf="@id/list_total_cost"
-            android:layout_toEndOf="@+id/list_total_cost"
             android:layout_alignBaseline="@+id/list_total_cost"
-            android:layout_alignBottom="@+id/list_total_cost"/>
+            android:layout_alignBottom="@+id/list_total_cost"
+            android:layout_toEndOf="@+id/list_total_cost"
+            android:layout_toRightOf="@id/list_total_cost"
+            android:text="  €"
+            android:textSize="18sp" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
