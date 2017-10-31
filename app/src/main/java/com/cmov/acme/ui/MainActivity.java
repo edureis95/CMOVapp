@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button login_button;
     private Button shop_button;
     private Button register_button;
+    private Button logout_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        logout_button = (Button)findViewById(R.id.logout_button);
+        logout_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+               User user = User.getInstance();
+                user.deleteInstance();
+                login_button.setVisibility(View.VISIBLE);
+                register_button.setVisibility(View.VISIBLE);
+                logout_button.setVisibility(View.GONE);
+            }
+        });
+
 
     }
 
@@ -70,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         if(user.getToken() != null){
             login_button.setVisibility(View.INVISIBLE);
             register_button.setVisibility(View.INVISIBLE);
+            logout_button.setVisibility(View.VISIBLE);
+
         }
     }
 }

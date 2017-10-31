@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,13 @@ import com.cmov.acme.api.service.Login_service;
 import com.cmov.acme.singletons.RetrofitSingleton;
 import com.cmov.acme.singletons.User;
 import com.cmov.acme.utils.ShowDialog;
+
+import java.io.UnsupportedEncodingException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username_text;
     private ShowDialog dialog;
     private View login;
+    private String publicKey;
+    private String privateKey;
 
 
     @Override
@@ -67,18 +77,56 @@ public class LoginActivity extends AppCompatActivity {
     View.OnClickListener loginHandler = new View.OnClickListener() {
         public void onClick(View v) {
             Login_service loginService = retrofit.create(Login_service.class);
-            LoginRequest request = new LoginRequest(username_text.getText().toString(),password_text.getText().toString());
+
+            KeyPairGenerator kgen = null;  //RSA keys
+            PrivateKey pri = null;                             // private key in a Java class
+            PublicKey pub = null;
+            try {
+                kgen = KeyPairGenerator.getInstance("RSA");
+                kgen.initialize(368);
+                KeyPair kp = kgen.generateKeyPair();
+                pri = kp.getPrivate();                             // private key in a Java class
+                pub = kp.getPublic();//size in bits
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+            StringBuilder str = new StringBuilder("-----BEGIN PUBLIC KEY-----\n");
+            str.append(new String(Base64.encode(pub.getEncoded(), Base64.DEFAULT)));
+            str.append("-----END PUBLIC KEY-----\n");
+
+            publicKey = null;
+            try {
+                publicKey = new String(str.toString().getBytes(), "UTF_8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            StringBuilder strprivate = new StringBuilder("-----BEGIN PRIVATE RSA KEY-----\n");
+            strprivate.append(new String(Base64.encode(pri.getEncoded(), Base64.DEFAULT)));
+            strprivate.append("-----END PRIVATE RSA KEY-----\n");
+
+            privateKey = null;
+            try {
+                privateKey = new String(str.toString().getBytes(), "UTF_8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            LoginRequest request = new LoginRequest(username_text.getText().toString(),password_text.getText().toString(),publicKey);
             Call<LoginResponse> call = loginService.sendLogin(request);
             showProgress(true);
+
             call.enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     if(response.isSuccessful() && response.body().getToken() != null) {
                         User user =  User.getInstance();
                         user.setToken(response.body().getToken());
+                        user.setKeyPair(publicKey, privateKey);
                         Intent intent = new Intent(LoginActivity.this, ReceiptsActivity.class);
                         startActivity(intent);
-                        //  finish();
+                        finish();
                     } else {
                         dialog.showDialog(LoginActivity.this, "Unsuccessful login");
                         showProgress(false);
