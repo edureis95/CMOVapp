@@ -139,6 +139,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                 ((ShopActivity)context).setTotalCost(total_cost);
                 notifyDataSetChanged();
                 return;
+                
             }
         }
         product.addQuantity();
