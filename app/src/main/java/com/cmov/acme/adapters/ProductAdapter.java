@@ -1,4 +1,4 @@
-package com.cmov.acme.ui;
+package com.cmov.acme.adapters;
 
 
 import android.content.Context;
@@ -18,13 +18,14 @@ import android.widget.Toast;
 
 import com.cmov.acme.R;
 import com.cmov.acme.models.Product;
+import com.cmov.acme.ui.ShopActivity;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class ProductAdapter extends ArrayAdapter<Product>{
+public class ProductAdapter extends ArrayAdapter<Product>{
 
     private Context context;
 
@@ -62,11 +63,11 @@ class ProductAdapter extends ArrayAdapter<Product>{
         String product_model = getItem(position).getModel();
         int product_price = getItem(position).getPrice();
 
-        list_product_name = (TextView) custom_view.findViewById(R.id.list_product_name);
-        list_product_price = (TextView) custom_view.findViewById(R.id.list_product_price);
+
         list_product_model = (TextView) custom_view.findViewById(R.id.list_product_model);
         product_quantity = (TextView)  custom_view.findViewById(R.id.product_quantity);
-
+        list_product_name = (TextView) custom_view.findViewById(R.id.list_product_name);
+        list_product_price = (TextView) custom_view.findViewById(R.id.list_product_price);
 
         product_quantity.setText(Integer.toString(products.get(position).getQuantity()));
 
@@ -126,6 +127,7 @@ class ProductAdapter extends ArrayAdapter<Product>{
     public void deleteProduct(int pos){
         subtractCost();
         products.remove(pos);
+
         notifyDataSetChanged();
     }
 

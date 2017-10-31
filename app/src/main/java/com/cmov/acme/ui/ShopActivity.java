@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cmov.acme.R;
+import com.cmov.acme.adapters.ProductAdapter;
 import com.cmov.acme.models.Product;
 import com.cmov.acme.models.ProductList;
 import com.google.zxing.integration.android.IntentIntegrator;

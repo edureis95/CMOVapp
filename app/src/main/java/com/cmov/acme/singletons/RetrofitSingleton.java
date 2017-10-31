@@ -9,7 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitSingleton {
     private static Retrofit instance = null;
-    private String token;
     protected RetrofitSingleton() {
         // Exists only to defeat instantiation.
     }

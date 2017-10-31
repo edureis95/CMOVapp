@@ -1,6 +1,11 @@
 package com.cmov.acme.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +31,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final static String TAG = "RESPONSE";
     private Retrofit retrofit;
 
     private Button login_button;
@@ -34,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password_text;
     private EditText username_text;
     private ShowDialog dialog;
+    private View login;
 
 
     @Override
@@ -42,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         dialog = new ShowDialog();
-
+        login = findViewById(R.id.login);
         retrofit = RetrofitSingleton.getInstance();
 
 
@@ -54,40 +59,46 @@ public class LoginActivity extends AppCompatActivity {
         password_text = (EditText) findViewById(R.id.password_text);
         username_text = (EditText) findViewById(R.id.username_text);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+
 
 
     }
 
     View.OnClickListener loginHandler = new View.OnClickListener() {
         public void onClick(View v) {
-            progressBar.setVisibility(View.VISIBLE);
             Login_service loginService = retrofit.create(Login_service.class);
             LoginRequest request = new LoginRequest(username_text.getText().toString(),password_text.getText().toString());
             Call<LoginResponse> call = loginService.sendLogin(request);
-
+            showProgress(true);
             call.enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     if(response.isSuccessful() && response.body().getToken() != null) {
                         User user =  User.getInstance();
                         user.setToken(response.body().getToken());
-                        dialog.showDialog(LoginActivity.this,user.getToken());
+                        Intent intent = new Intent(LoginActivity.this, ReceiptsActivity.class);
+                        startActivity(intent);
+                        //  finish();
                     } else {
                         dialog.showDialog(LoginActivity.this, "Unsuccessful login");
+                        showProgress(false);
                     }
-                    progressBar.setVisibility(View.INVISIBLE);
                 }
 
 
                 @Override
                 public void onFailure(Call<LoginResponse> call, Throwable t) {
                     dialog.showDialog(LoginActivity.this, "Unable to connect to  the server. Try again later.");
-                    progressBar.setVisibility(View.INVISIBLE);
+                    showProgress(false);
                 }
             });
 
         }
     };
+
+    private void showProgress(final boolean show) {
+        login.setVisibility(show ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
 
 }
