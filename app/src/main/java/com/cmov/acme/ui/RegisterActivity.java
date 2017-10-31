@@ -179,11 +179,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(RegisterActivity.this, date, myCalendar
+                DatePickerDialog dialog = new DatePickerDialog(RegisterActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                dialog.show();
             }
         });
+
+
     }
 
     private void updateLabel() {
