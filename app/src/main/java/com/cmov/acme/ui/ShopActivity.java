@@ -47,8 +47,8 @@ public class ShopActivity extends AppCompatActivity {
         if(requestCode == 1 && resultCode == RESULT_OK){
             Bundle bundle = data.getExtras();
             Product product = (Product)bundle.getSerializable("Product");
-            adapter.add(product);
-            adapter.addCost();
+            adapter.addProduct(product);
+            adapter.addCost(product);
             setTotalCost(adapter.getTotal_cost());
         }
     }

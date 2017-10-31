@@ -41,7 +41,6 @@ public class ProductAdapter extends ArrayAdapter<Product>{
 
     private List<Product> products;
     private int total_cost=0;
-    private int quantity=1;
 
     public ProductAdapter(Context context, int resource, List<Product> products) {
         super(context, resource, products);
@@ -92,7 +91,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                 Product product = products.get(position);
                 product.addQuantity();
                 product_quantity.setText(Integer.toString(product.getQuantity()));
-                addCost();
+                addCost(product);
                 ((ShopActivity)context).setTotalCost(total_cost);
                 notifyDataSetChanged();
             }});
@@ -104,7 +103,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                 Product product = products.get(position);
                 product.subtractQuantity();
                 product_quantity.setText(Integer.toString(product.getQuantity()));
-                subtractCost();
+                subtractCost(product);
                 ((ShopActivity)context).setTotalCost(total_cost);
                 notifyDataSetChanged();
             }});
@@ -112,30 +111,37 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         return custom_view;
     }
 
-    public void addCost(){
-        for(int i = 0; i < products.size(); i++){;
-            total_cost += products.get(i).getPrice();
-        }
+    public void addCost(Product product){
+        total_cost += product.getPrice();
     }
 
-    public void subtractCost(){
-        for(int i = 0; i < products.size(); i++){
-            total_cost -= products.get(i).getPrice();
+    public void subtractCost(Product product){
+        int price = product.getPrice();
+        if(total_cost-price <= 0) {
+            return;
+        }
+        else{
+            total_cost -= price;
         }
     }
 
     public void deleteProduct(int pos){
-        subtractCost();
+        total_cost -= (products.get(pos).getPrice() * products.get(pos).getQuantity());
         products.remove(pos);
-
+        ((ShopActivity)context).setTotalCost(total_cost);
         notifyDataSetChanged();
     }
 
-    public void addQuantity(){
-
-    }
-
-    public void subtractQuantity(){
-
+    public void addProduct(Product product){
+        for(int i = 0; i < products.size(); i++){
+            if(products.get(i).getName().equals(product.getName())){
+                products.get(i).addQuantity();
+                ((ShopActivity)context).setTotalCost(total_cost);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+        product.addQuantity();
+        products.add(product);
     }
 }

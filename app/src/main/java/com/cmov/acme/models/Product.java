@@ -50,7 +50,7 @@ public class Product implements Serializable{
     }
 
     public Product(String name, int price, String bar_code, String maker, String model) {
-        this.quantity = 1;
+        this.quantity = 0;
         this.name = name;
         this.price = price;
         this.bar_code = bar_code;
