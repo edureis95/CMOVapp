@@ -101,4 +101,9 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showProgress(false);
+    }
 }
