@@ -1,4 +1,4 @@
-package com.cmov.acme.ui;
+package com.cmov.acme.adapters;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.cmov.acme.R;
 import com.cmov.acme.api.model.response.PastTransactionsResponse;
 import com.cmov.acme.api.model.response.ReceiptResponse;
+import com.cmov.acme.ui.PastTransactions;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

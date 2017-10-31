@@ -1,4 +1,4 @@
-package com.cmov.acme.ui;
+package com.cmov.acme.adapters;
 
 import android.content.Context;
 import android.content.Intent;

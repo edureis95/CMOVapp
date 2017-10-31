@@ -28,6 +28,7 @@
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.ProductActivity"></activity>
         <activity android:name=".ui.ReceiptsActivity"></activity>
+        <activity android:name=".ui.PastTransactions"></activity>
 
     </application>
 

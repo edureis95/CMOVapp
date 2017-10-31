@@ -1,7 +1,5 @@
 package com.cmov.acme.ui;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cmov.acme.R;
+import com.cmov.acme.adapters.PastTransactionsAdapter;
 import com.cmov.acme.api.model.response.PastTransactionsResponse;
 import com.cmov.acme.api.service.PastTransactions_service;
 import com.cmov.acme.singletons.RetrofitSingleton;
@@ -17,7 +16,6 @@ import com.cmov.acme.singletons.User;
 import com.cmov.acme.utils.ShowDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

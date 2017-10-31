@@ -13,7 +13,7 @@
         tools:layout_editor_absoluteY="7dp">
 
         <TextView
-            android:id="@+id/list_product_name "
+            android:id="@+id/list_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -23,7 +23,7 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <TextView
-            android:id="@+id/list_product_price "
+            android:id="@+id/list_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/list_product_model"
@@ -91,8 +91,8 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/list_product_price "
-            android:layout_alignBottom="@+id/list_product_price "
+            android:layout_alignBaseline="@+id/list_product_price"
+            android:layout_alignBottom="@+id/list_product_price"
             android:layout_alignLeft="@+id/button_add"
             android:layout_alignStart="@+id/button_add"
             android:text="Quantity:" />

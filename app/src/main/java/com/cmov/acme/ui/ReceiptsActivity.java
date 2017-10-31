@@ -2,11 +2,10 @@ package com.cmov.acme.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.cmov.acme.R;
+import com.cmov.acme.adapters.ReceiptAdapter;
 import com.cmov.acme.api.model.response.ReceiptResponse;
 import com.cmov.acme.api.service.Receipts_service;
 import com.cmov.acme.singletons.RetrofitSingleton;
