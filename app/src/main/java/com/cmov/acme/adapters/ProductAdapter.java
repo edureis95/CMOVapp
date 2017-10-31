@@ -127,7 +127,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
     public void deleteProduct(int pos){
         subtractCost();
         products.remove(pos);
-        
+
         notifyDataSetChanged();
     }
 

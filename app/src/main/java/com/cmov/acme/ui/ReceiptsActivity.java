@@ -3,7 +3,6 @@ package com.cmov.acme.ui;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
-
 import com.cmov.acme.R;
 import com.cmov.acme.adapters.ReceiptAdapter;
 import com.cmov.acme.api.model.response.ReceiptResponse;
