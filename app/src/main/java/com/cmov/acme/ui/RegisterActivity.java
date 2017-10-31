@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,16 @@ import com.cmov.acme.api.service.Register_service;
 import com.cmov.acme.singletons.RetrofitSingleton;
 import com.cmov.acme.singletons.User;
 import com.cmov.acme.utils.ShowDialog;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +48,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText input_creditcardnumber;
     private EditText input_creditcardtype;
     private EditText input_creditcardvalidity;
-
+    private View register;
     private ProgressBar progressBar;
+    private String publicKey;
+    private String privateKey;
 
 
     @Override
@@ -48,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         dialog = new ShowDialog();
 
         retrofit = RetrofitSingleton.getInstance();
-
+        register = findViewById(R.id.register_layout);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -65,13 +78,49 @@ public class RegisterActivity extends AppCompatActivity {
         register_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
+                showProgress(true);
                 Register_service register_service = retrofit.create(Register_service.class);
+
+                KeyPairGenerator kgen = null;  //RSA keys
+                PrivateKey pri = null;                             // private key in a Java class
+                PublicKey pub = null;
+                try {
+                    kgen = KeyPairGenerator.getInstance("RSA");
+                    kgen.initialize(368);
+                    KeyPair kp = kgen.generateKeyPair();
+                    pri = kp.getPrivate();                             // private key in a Java class
+                    pub = kp.getPublic();//size in bits
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
+                StringBuilder str = new StringBuilder("-----BEGIN PUBLIC KEY-----\n");
+                str.append(new String(Base64.encode(pub.getEncoded(), Base64.DEFAULT)));
+                str.append("-----END PUBLIC KEY-----\n");
+
+                publicKey = null;
+                try {
+                    publicKey = new String(str.toString().getBytes(), "UTF_8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                StringBuilder strprivate = new StringBuilder("-----BEGIN PRIVATE RSA KEY-----\n");
+                strprivate.append(new String(Base64.encode(pri.getEncoded(), Base64.DEFAULT)));
+                strprivate.append("-----END PRIVATE RSA KEY-----\n");
+
+                privateKey = null;
+                try {
+                    privateKey = new String(str.toString().getBytes(), "UTF_8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
 
                 RegisterRequest request = new RegisterRequest(input_name.getText().toString()
                         ,input_username.getText().toString(),input_password.getText().toString(),input_nif.getText().toString()
-                        ,input_address.getText().toString(),"123131 ",input_creditcardnumber.getText().toString(),input_creditcardtype.getText().toString(),
-                        input_creditcardvalidity.getText().toString()); // TODO FALTA PUBLIC KEY
+                        ,input_address.getText().toString(),publicKey,input_creditcardnumber.getText().toString(),input_creditcardtype.getText().toString(),
+                        input_creditcardvalidity.getText().toString());
 
                 Call<RegisterResponse> call = register_service.sendRegister(request);
 
@@ -82,24 +131,37 @@ public class RegisterActivity extends AppCompatActivity {
                         if(response.isSuccessful() && response.body().getToken() != null) {
 
                             User user =  User.getInstance();
+                            user.setKeyPair(publicKey, privateKey);
                             user.setToken(response.body().getToken());
-                            dialog.showDialog(RegisterActivity.this, user.getToken());
-                            progressBar.setVisibility(View.INVISIBLE);
+                            Intent intent = new Intent(RegisterActivity.this, ReceiptsActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             dialog.showDialog(RegisterActivity.this,"Unsuccessful register. Try again");
-                            progressBar.setVisibility(View.INVISIBLE);
+                            showProgress(false);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RegisterResponse> call, Throwable t) {
                         dialog.showDialog(RegisterActivity.this, "Unable to connect to  the server. Try again later.");
-                        progressBar.setVisibility(View.INVISIBLE);
+                        showProgress(false);
                     }
                 });
 
             }
         });
+    }
+
+    private void showProgress(final boolean show) {
+        register.setVisibility(show ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showProgress(false);
     }
 
 
