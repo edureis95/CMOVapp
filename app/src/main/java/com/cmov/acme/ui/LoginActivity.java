@@ -22,6 +22,7 @@ import com.cmov.acme.api.model.response.LoginResponse;
 import com.cmov.acme.api.service.Login_service;
 import com.cmov.acme.singletons.RetrofitSingleton;
 import com.cmov.acme.singletons.User;
+import com.cmov.acme.utils.Keygenerator;
 import com.cmov.acme.utils.ShowDialog;
 
 import java.io.UnsupportedEncodingException;
@@ -77,41 +78,9 @@ public class LoginActivity extends AppCompatActivity {
     View.OnClickListener loginHandler = new View.OnClickListener() {
         public void onClick(View v) {
             Login_service loginService = retrofit.create(Login_service.class);
-
-            KeyPairGenerator kgen = null;  //RSA keys
-            PrivateKey pri = null;                             // private key in a Java class
-            PublicKey pub = null;
-            try {
-                kgen = KeyPairGenerator.getInstance("RSA");
-                kgen.initialize(368);
-                KeyPair kp = kgen.generateKeyPair();
-                pri = kp.getPrivate();                             // private key in a Java class
-                pub = kp.getPublic();//size in bits
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-
-            StringBuilder str = new StringBuilder("-----BEGIN PUBLIC KEY-----\n");
-            str.append(new String(Base64.encode(pub.getEncoded(), Base64.DEFAULT)));
-            str.append("-----END PUBLIC KEY-----\n");
-
-            publicKey = null;
-            try {
-                publicKey = new String(str.toString().getBytes(), "UTF_8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-
-            StringBuilder strprivate = new StringBuilder("-----BEGIN PRIVATE RSA KEY-----\n");
-            strprivate.append(new String(Base64.encode(pri.getEncoded(), Base64.DEFAULT)));
-            strprivate.append("-----END PRIVATE RSA KEY-----\n");
-
-            privateKey = null;
-            try {
-                privateKey = new String(str.toString().getBytes(), "UTF_8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            Keygenerator gen = new Keygenerator();
+            publicKey = gen.getPublicKey();
+            privateKey = gen.getPrivateKey();
 
             LoginRequest request = new LoginRequest(username_text.getText().toString(),password_text.getText().toString(),publicKey);
             Call<LoginResponse> call = loginService.sendLogin(request);
