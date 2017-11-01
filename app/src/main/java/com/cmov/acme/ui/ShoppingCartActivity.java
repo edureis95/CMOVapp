@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.cmov.acme.R;
 import com.cmov.acme.adapters.ProductAdapter;
+import com.cmov.acme.models.Product;
 import com.cmov.acme.models.ProductList;
 import com.cmov.acme.singletons.User;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -58,7 +59,7 @@ public class ShoppingCartActivity extends AppCompatActivity
         final Activity activity = this;
 
         adapter = new ProductAdapter(this, android.R.layout.simple_list_item_1, ProductList.list_products);
-        ListView productListView = (ListView) findViewById(R.id.listview);
+        ListView productListView = (ListView) findViewById(R.id.product_list_view);
         productListView.setAdapter(adapter);
 
         checkout_button.setOnClickListener(new View.OnClickListener(){
@@ -188,5 +189,17 @@ public class ShoppingCartActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            Product product = (Product) bundle.getSerializable("Product");
+            adapter.addProduct(product);
+            adapter.addCost(product);
+            setTotalCost(adapter.getTotal_cost());
+        }
     }
 }
