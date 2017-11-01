@@ -1,15 +1,24 @@
 package com.cmov.acme.ui;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.content.DialogInterface;
     import android.content.Intent;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cmov.acme.R;
 import com.cmov.acme.adapters.PastTransactionsAdapter;
@@ -27,11 +36,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class PastTransactions extends AppCompatActivity {
+public class PastTransactions extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private Retrofit retrofit;
-    private ShowDialog dialog;
     private ArrayList<PastTransactionsResponse> listaResposta;
     private ListView listView;
+    private String date;
     private String id;
     private TextView totalPrice;
     private ProgressBar progressBar;
@@ -42,12 +51,24 @@ public class PastTransactions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_past_transactions);
+        setContentView(R.layout.past_transactions_activity_drawer);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            date = extras.getString("date");
             id = extras.getString("id");
         }
-        dialog = new ShowDialog();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         listaResposta = new ArrayList<PastTransactionsResponse>();
 
@@ -57,7 +78,7 @@ public class PastTransactions extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview);
 
         TextView name = (TextView) findViewById(R.id.text_compra);
-        name.setText("Transaction nº " + id);
+        name.setText(date);
 
         totalPrice = (TextView) findViewById(R.id.text_price);
 
@@ -83,7 +104,7 @@ public class PastTransactions extends AppCompatActivity {
                     showProgress(false);
 
                 } else {
-                    dialog.showDialog(PastTransactions.this, response.toString());
+                    Toast.makeText(PastTransactions.this,response.message(), Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
@@ -91,7 +112,7 @@ public class PastTransactions extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<PastTransactionsResponse>>  call, Throwable t) {
-                dialog.showDialog(PastTransactions.this, t.getMessage().toString());
+                Toast.makeText(PastTransactions.this,"Unable to connect to server", Toast.LENGTH_LONG).show();
                 finish();
 
             }
@@ -104,5 +125,48 @@ public class PastTransactions extends AppCompatActivity {
     private void showProgress(final boolean show) {
         transactionsview.setVisibility(show ? View.GONE : View.VISIBLE);
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.shopping_cart) {
+            Intent intent = new Intent(PastTransactions.this, ShoppingCartActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.past_transactions) {
+            Intent intent = new Intent(PastTransactions.this, ReceiptsActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.account) {
+
+        } else if (id == R.id.logout) {
+            User user = User.getInstance();
+            user.deleteInstance();
+
+            Intent intent = new Intent(PastTransactions.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

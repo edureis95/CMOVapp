@@ -16,4 +16,13 @@
     </string>
     <string name="barCode">bar_code</string>
     <string name="title_activity_login33">Sign in</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <item type="id" name="id" />
+    <item type="id" name="date" />
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
