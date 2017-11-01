@@ -1,12 +1,9 @@
 package com.cmov.acme.ui;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,15 +19,6 @@ import com.cmov.acme.singletons.User;
 import com.cmov.acme.utils.Keygenerator;
 import com.cmov.acme.utils.ShowDialog;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -39,13 +27,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private Button register_button;
     private Retrofit retrofit;
-    private ShowDialog dialog;
     private EditText input_name;
     private EditText input_username;
     private EditText input_password;
@@ -66,7 +52,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        dialog = new ShowDialog();
 
         retrofit = RetrofitSingleton.getInstance();
         register = findViewById(R.id.register_layout);
@@ -108,18 +93,16 @@ public class RegisterActivity extends AppCompatActivity {
                             User user =  User.getInstance();
                             user.setKeyPair(publicKey, privateKey);
                             user.setToken(response.body().getToken());
-                            Intent intent = new Intent(RegisterActivity.this, ReceiptsActivity.class);
+                            Intent intent = new Intent(RegisterActivity.this, ShoppingCartActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            dialog.showDialog(RegisterActivity.this,"Unsuccessful register. Try again");
                             showProgress(false);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                        dialog.showDialog(RegisterActivity.this, "Unable to connect to  the server. Try again later.");
                         showProgress(false);
                     }
                 });

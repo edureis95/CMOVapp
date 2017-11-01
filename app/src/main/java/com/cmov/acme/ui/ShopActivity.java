@@ -67,7 +67,7 @@ public class ShopActivity extends AppCompatActivity {
         final Activity activity = this;
 
         adapter = new ProductAdapter(this, android.R.layout.simple_list_item_1, ProductList.list_products);
-        ListView productListView = (ListView) findViewById(R.id.product_list_view);
+        ListView productListView = (ListView) findViewById(R.id.listview);
         productListView.setAdapter(adapter);
 
 

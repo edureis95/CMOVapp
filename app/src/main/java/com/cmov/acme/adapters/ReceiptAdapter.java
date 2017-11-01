@@ -62,14 +62,16 @@ public class ReceiptAdapter extends ArrayAdapter<ReceiptResponse> {
 
         Button button = (Button) convertView.findViewById(R.id.button_ver);
         button.setOnClickListener(handler);
-        button.setTag(itemPosition.getReceipt_id());
+        button.setTag(R.id.date,newstring);
+        button.setTag(R.id.id,itemPosition.getReceipt_id());
         return convertView;
     }
 
     View.OnClickListener handler = new View.OnClickListener() {
         public void onClick(View v) {
             Intent intent = new Intent(context, PastTransactions.class);
-            intent.putExtra("id",v.getTag().toString());
+            intent.putExtra("date",v.getTag(R.id.date).toString());
+            intent.putExtra("id",v.getTag(R.id.id).toString());
             context.startActivity(intent);
             }};
 
