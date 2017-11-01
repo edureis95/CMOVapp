@@ -21,55 +21,16 @@ public class MainActivity extends AppCompatActivity {
     private Button login_button;
     private Button shop_button;
     private Button register_button;
+    private Button logout_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        login_button = (Button)findViewById(R.id.login_button);
-        final Activity activity = this;
-        login_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-              //  finish();
-            }
-        });
-
-        shop_button = (Button)findViewById(R.id.shop_button);
-        shop_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ShopActivity.class);
-                startActivity(intent);
-               // finish();
-            }
-        });
-
-
-        register_button = (Button)findViewById(R.id.register_button);
-        register_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-                // finish();
-            }
-        });
-
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 
-    @Override
-    public void onResume()
-    {  // After a pause OR at startup
-        super.onResume();
-        User user =  User.getInstance();
-        if(user.getToken() != null){
-            login_button.setVisibility(View.INVISIBLE);
-            register_button.setVisibility(View.INVISIBLE);
-        }
-    }
 }

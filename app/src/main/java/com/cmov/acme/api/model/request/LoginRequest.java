@@ -11,9 +11,12 @@ public class LoginRequest {
     private String username;
     @SerializedName("password")
     private String password;
+    @SerializedName("publickey")
+    private String publickey;
 
-    public LoginRequest(String username, String password) {
+    public LoginRequest(String username, String password, String publickey) {
         this.username = username;
         this.password = password;
+        this.publickey = publickey;
     }
 }

@@ -28,7 +28,7 @@ import com.cmov.acme.models.Product;
 import com.cmov.acme.singletons.RetrofitSingleton;
 import com.cmov.acme.singletons.User;
 import com.cmov.acme.ui.RegisterActivity;
-import com.cmov.acme.ui.ShopActivity;
+import com.cmov.acme.ui.ShoppingCartActivity;
 
 import org.w3c.dom.Text;
 
@@ -109,7 +109,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                 product.addQuantity();
                 product_quantity.setText(Integer.toString(product.getQuantity()));
                 addCost(product);
-                ((ShopActivity)context).setTotalCost(total_cost);
+                ((ShoppingCartActivity)context).setTotalCost(total_cost);
                 notifyDataSetChanged();
             }});
 
@@ -121,7 +121,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                 product.subtractQuantity();
                 product_quantity.setText(Integer.toString(product.getQuantity()));
                 subtractCost(product);
-                ((ShopActivity)context).setTotalCost(total_cost);
+                ((ShoppingCartActivity)context).setTotalCost(total_cost);
                 notifyDataSetChanged();
             }});
 
@@ -145,7 +145,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
     public void deleteProduct(int pos){
         total_cost -= (products.get(pos).getPrice() * products.get(pos).getQuantity());
         products.remove(pos);
-        ((ShopActivity)context).setTotalCost(total_cost);
+        ((ShoppingCartActivity)context).setTotalCost(total_cost);
         notifyDataSetChanged();
     }
 
@@ -153,7 +153,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         for(int i = 0; i < products.size(); i++){
             if(products.get(i).getName().equals(product.getName())){
                 products.get(i).addQuantity();
-                ((ShopActivity)context).setTotalCost(total_cost);
+                ((ShoppingCartActivity)context).setTotalCost(total_cost);
                 notifyDataSetChanged();
                 return;
             }
@@ -165,7 +165,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
     public void reset_products(){
         products.clear();
         total_cost = 0;
-        ((ShopActivity)context).setTotalCost(total_cost);
+        ((ShoppingCartActivity)context).setTotalCost(total_cost);
         notifyDataSetChanged();
 
     }
