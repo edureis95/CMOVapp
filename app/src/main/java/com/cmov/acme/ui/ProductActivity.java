@@ -97,12 +97,13 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
 
-                product = new Product(response.body().getName(),
+
+                product = new Product(response.body().getId(),
+                                      response.body().getName(),
                                       response.body().getPrice(),
                                       bar_code,
                                       response.body().getMaker(),
                                       response.body().getModel()); //cria instancia do produto para mandar como resposta
-
                 handler.sendEmptyMessage(0); //criar handler para a thread ter menos custo
             }
             @Override

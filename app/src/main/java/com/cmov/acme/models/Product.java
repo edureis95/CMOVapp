@@ -8,12 +8,17 @@ import java.io.Serializable;
 
 public class Product implements Serializable{
 
+    private int id;
     private String name;
     private int price;
     private String bar_code;
     private String maker;
     private String model;
     private int quantity;
+
+    public int getId() {
+        return id;
+    }
 
     public int getQuantity() {
         return quantity;
@@ -49,7 +54,8 @@ public class Product implements Serializable{
         return model;
     }
 
-    public Product(String name, int price, String bar_code, String maker, String model) {
+    public Product(int id, String name, int price, String bar_code, String maker, String model) {
+        this.id = id;
         this.quantity = 0;
         this.name = name;
         this.price = price;

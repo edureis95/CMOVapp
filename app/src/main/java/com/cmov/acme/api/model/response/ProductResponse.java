@@ -9,6 +9,9 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ProductResponse {
+    @SerializedName("id")
+    private int id;
+
     @SerializedName("name")
     private String name;
 
@@ -23,6 +26,10 @@ public class ProductResponse {
 
     @SerializedName("model")
     private String model;
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -44,7 +51,8 @@ public class ProductResponse {
         return model;
     }
 
-    public ProductResponse(String name, int price, String bar_code, String maker, String model) {
+    public ProductResponse(int id, String name, int price, String bar_code, String maker, String model) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.bar_code = bar_code;

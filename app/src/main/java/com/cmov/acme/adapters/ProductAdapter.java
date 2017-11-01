@@ -18,7 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmov.acme.R;
+import com.cmov.acme.api.model.request.CheckoutRequest;
+import com.cmov.acme.api.model.request.RegisterRequest;
+import com.cmov.acme.api.model.response.CheckoutResponse;
+import com.cmov.acme.api.model.response.RegisterResponse;
+import com.cmov.acme.api.service.Checkout_service;
+import com.cmov.acme.api.service.Register_service;
 import com.cmov.acme.models.Product;
+import com.cmov.acme.singletons.RetrofitSingleton;
+import com.cmov.acme.singletons.User;
+import com.cmov.acme.ui.RegisterActivity;
 import com.cmov.acme.ui.ShopActivity;
 
 import org.w3c.dom.Text;
@@ -26,9 +35,15 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class ProductAdapter extends ArrayAdapter<Product>{
 
     private Context context;
+    private Retrofit retrofit;
 
     private TextView list_product_name;
     private TextView list_product_model;
@@ -45,6 +60,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
 
     public ProductAdapter(Context context, int resource, List<Product> products) {
         super(context, resource, products);
+        this.retrofit = RetrofitSingleton.getInstance();
         this.context = context;
         this.products = products;
     }
@@ -144,5 +160,51 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         }
         product.addQuantity();
         products.add(product);
+    }
+
+    public void reset_products(){
+        products.clear();
+        total_cost = 0;
+        ((ShopActivity)context).setTotalCost(total_cost);
+        notifyDataSetChanged();
+
+    }
+
+    public void make_purchase(){
+        if(products.isEmpty()){
+            Toast.makeText(context, "Shopping cart empty", Toast.LENGTH_LONG).show();
+        }
+
+        List<CheckoutRequest> purchases = new ArrayList<>();
+        Checkout_service checkout_service = retrofit.create(Checkout_service.class);
+
+        for(int i = 0; i < products.size(); i++){
+            Product product = products.get(i);
+            CheckoutRequest request = new CheckoutRequest(product.getId(), product.getQuantity());
+            purchases.add(request);
+        }
+
+
+        Call<CheckoutResponse> call = checkout_service.sendPurchase("Bearer " + User.getInstance().getToken(), purchases);
+
+        call.enqueue(new Callback<CheckoutResponse>() {
+            @Override
+            public void onResponse(Call<CheckoutResponse> call, Response<CheckoutResponse> response) {
+                if(response.isSuccessful()){
+                    reset_products();
+
+                }
+                else{
+                    Log.i("Teste", response.message());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CheckoutResponse> call, Throwable t) {
+                Log.i("Teste", "FAILED");
+            }
+        });
+
     }
 }
