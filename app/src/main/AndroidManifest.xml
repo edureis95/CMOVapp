@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".ui.LoginActivity"
             android:label="Login" />
+
         <activity android:name=".ui.RegisterActivity" android:label="Register" />
         <activity android:name=".ui.ProductActivity" />
         <activity android:name=".ui.ReceiptsActivity" android:label="Past Transactions"
@@ -34,7 +35,7 @@
         <activity
             android:name=".ui.ShoppingCartActivity"
             android:label="Shopping Cart"
-            android:theme="@style/AppTheme.NoActionBar" />
-    </application>
 
+     android:theme="@style/AppTheme.NoActionBar" />
+    </application>
 </manifest>

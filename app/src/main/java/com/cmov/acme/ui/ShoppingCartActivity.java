@@ -3,6 +3,8 @@ package com.cmov.acme.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +27,9 @@ import com.cmov.acme.models.Product;
 import com.cmov.acme.models.ProductList;
 import com.cmov.acme.singletons.User;
 import com.google.zxing.integration.android.IntentIntegrator;
+
+import com.cmov.acme.R;
+import com.cmov.acme.singletons.User;
 
 public class ShoppingCartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,7 +55,6 @@ public class ShoppingCartActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
         scan_button = (Button) findViewById(R.id.scan_button);
         checkout_button = (Button) findViewById(R.id.checkout_button);
@@ -133,6 +138,7 @@ public class ShoppingCartActivity extends AppCompatActivity
         Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
         intent.putExtra("bar_code", "61234567890");
         startActivityForResult(intent, 1);
+
     }
 
     @Override
@@ -190,6 +196,7 @@ public class ShoppingCartActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
