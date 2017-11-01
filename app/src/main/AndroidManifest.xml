@@ -27,7 +27,8 @@
             android:label="Login" />
         <activity android:name=".ui.RegisterActivity" android:label="Register" />
         <activity android:name=".ui.ProductActivity" />
-        <activity android:name=".ui.ReceiptsActivity" android:label="Past Transactions" />
+        <activity android:name=".ui.ReceiptsActivity" android:label="Past Transactions"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.PastTransactions" android:label="Transaction"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
