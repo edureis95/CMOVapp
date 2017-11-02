@@ -15,7 +15,7 @@ public class RetrofitSingleton {
     public static Retrofit getInstance() {
         if(instance == null) {
             Retrofit.Builder builder = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:3000")
+                    .baseUrl("http://172.30.7.255:3000")
                     .addConverterFactory(GsonConverterFactory.create());
 
             instance = builder.build();

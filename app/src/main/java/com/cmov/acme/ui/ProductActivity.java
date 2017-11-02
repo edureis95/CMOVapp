@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ public class ProductActivity extends AppCompatActivity {
     private TextView model;
     private Button addCart;
     private String bar_code;
+    private View productlayout;
+    private ProgressBar progressBar;
     private Product product;
 
 
@@ -52,11 +55,15 @@ public class ProductActivity extends AppCompatActivity {
         price = (TextView) findViewById(R.id.product_price);
         maker = (TextView) findViewById(R.id.product_maker);
         model = (TextView) findViewById(R.id.product_model);
+        productlayout = findViewById(R.id.productlayout);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar4);
+
 
         retrofit = RetrofitSingleton.getInstance();
 
         Intent intent = getIntent();
         getProductContent(intent.getStringExtra("bar_code"));
+
 
         addCart = (Button)findViewById(R.id.button_add_product);
         addCart.setOnClickListener(new View.OnClickListener(){
@@ -92,25 +99,36 @@ public class ProductActivity extends AppCompatActivity {
 
     public void getProductContent(final String bar_code){
         Product_service productService = retrofit.create(Product_service.class);
+
         Call<ProductResponse> call = productService.getProduct(bar_code);
         call.enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-
-
-                product = new Product(response.body().getId(),
-                                      response.body().getName(),
-                                      response.body().getPrice(),
-                                      bar_code,
-                                      response.body().getMaker(),
-                                      response.body().getModel()); //cria instancia do produto para mandar como resposta
-                handler.sendEmptyMessage(0); //criar handler para a thread ter menos custo
+                if(response.isSuccessful()) {
+                    product = new Product(response.body().getId(),
+                            response.body().getName(),
+                            response.body().getPrice(),
+                            bar_code,
+                            response.body().getMaker(),
+                            response.body().getModel()); //cria instancia do produto para mandar como resposta
+                    handler.sendEmptyMessage(0); //criar handler para a thread ter menos custo
+                    showProgress(false);
+                } else {
+                    Toast.makeText(ProductActivity.this, "Product not found", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-                Log.i("FAIL", t.toString());
+                Toast.makeText(ProductActivity.this, "Unable to connect to server", Toast.LENGTH_LONG).show();
+                finish();
             }
         });
+    }
+
+    private void showProgress(final boolean show) {
+        productlayout.setVisibility(show ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
 }
