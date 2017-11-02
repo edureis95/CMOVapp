@@ -11,6 +11,6 @@ import retrofit2.http.Path;
  */
 
 public interface Product_service {
-    @GET("/products/{product_barcode}")
-    Call<ProductResponse> getProduct(@Path("product_barcode") String product);
+    @GET("/products/{bar_code}")
+    Call<ProductResponse> getProduct(@Path("bar_code") String product);
 }

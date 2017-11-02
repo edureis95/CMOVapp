@@ -1,5 +1,6 @@
 package com.cmov.acme.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,6 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +24,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cmov.acme.R;
 import com.cmov.acme.adapters.ProductAdapter;
@@ -30,6 +35,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 
 import com.cmov.acme.R;
 import com.cmov.acme.singletons.User;
+import com.google.zxing.integration.android.IntentResult;
 
 public class ShoppingCartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,7 +85,8 @@ public class ShoppingCartActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 // Here, thisActivity is the current activity
-               /* if (ContextCompat.checkSelfPermission(ShoppingCartActivity.this,
+
+                if (ContextCompat.checkSelfPermission(ShoppingCartActivity.this,
                         Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
                     // Should we show an explanation?
@@ -93,8 +100,7 @@ public class ShoppingCartActivity extends AppCompatActivity
                 } else {
                     IntentIntegrator integrator = new IntentIntegrator(activity);
                     integrator.initiateScan();
-                }*/
-                opensProduct();
+                }
             }
         });
     }
@@ -113,33 +119,36 @@ public class ShoppingCartActivity extends AppCompatActivity
         }
     }
 
-    /*
+
 
      @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null){
-            if(result.getContents() == null){
-                Toast.makeText(this, "Scanning cancelled", Toast.LENGTH_LONG).show();
-            }
-            else{
-                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
-                intent.putExtra(getString(R.string.barCode), result.getContents());
-                startActivity(intent);
-            }
-        }
-        else{
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }*/
+         if (requestCode == 1 && resultCode == RESULT_OK){
+             Bundle bundle = data.getExtras();
+             Product product = (Product) bundle.getSerializable("Product");
+             adapter.addProduct(product);
+             adapter.addCost(product);
+             setTotalCost(adapter.getTotal_cost());
+         }else{
+             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-    public void opensProduct() {
-        Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
-        intent.putExtra("bar_code", "61234567890");
-        startActivityForResult(intent, 1);
-
+             if(result != null){
+                 if(result.getContents() == null){
+                     Toast.makeText(this, "Scanning cancelled", Toast.LENGTH_LONG).show();
+                 }
+                 else{
+                     Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
+                     intent.putExtra("bar_code", result.getContents().toString());
+                     startActivityForResult(intent, 1);
+                 }
+             }
+             else{
+                 super.onActivityResult(requestCode, resultCode, data);
+             }
+         }
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -197,16 +206,4 @@ public class ShoppingCartActivity extends AppCompatActivity
         return true;
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            Bundle bundle = data.getExtras();
-            Product product = (Product) bundle.getSerializable("Product");
-            adapter.addProduct(product);
-            adapter.addCost(product);
-            setTotalCost(adapter.getTotal_cost());
-        }
-    }
 }
