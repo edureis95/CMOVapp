@@ -118,9 +118,10 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             @Override
             public void onClick(View view) {
                 Product product = products.get(position);
-                product.subtractQuantity();
+
                 product_quantity.setText(Integer.toString(product.getQuantity()));
                 subtractCost(product);
+                product.subtractQuantity();
                 ((ShoppingCartActivity)context).setTotalCost(total_cost);
                 notifyDataSetChanged();
             }});
@@ -134,16 +135,23 @@ public class ProductAdapter extends ArrayAdapter<Product>{
 
     public void subtractCost(Product product){
         int price = product.getPrice();
-        if(total_cost-price <= 0) {
-            return;
+
+        for(int i = 0; i < products.size(); i++){
+            if(products.get(i).getName().equals(product.getName())){
+               if(products.get(i).getQuantity() > 1) {
+                   total_cost -= price;
+               }
+            }
         }
-        else{
-            total_cost -= price;
-        }
+
     }
 
     public void deleteProduct(int pos){
         total_cost -= (products.get(pos).getPrice() * products.get(pos).getQuantity());
+
+        if(total_cost < 0)
+            total_cost = 0;
+
         products.remove(pos);
         ((ShoppingCartActivity)context).setTotalCost(total_cost);
         notifyDataSetChanged();
@@ -154,12 +162,13 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             if(products.get(i).getName().equals(product.getName())){
                 products.get(i).addQuantity();
                 ((ShoppingCartActivity)context).setTotalCost(total_cost);
-                notifyDataSetChanged();
+
                 return;
             }
         }
         product.addQuantity();
         products.add(product);
+
     }
 
     public void reset_products(){
@@ -171,8 +180,10 @@ public class ProductAdapter extends ArrayAdapter<Product>{
     }
 
     public void make_purchase(){
+
         if(products.isEmpty()){
             Toast.makeText(context, "Shopping cart empty", Toast.LENGTH_LONG).show();
+            return;
         }
 
         List<CheckoutRequest> purchases = new ArrayList<>();
@@ -191,6 +202,8 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             @Override
             public void onResponse(Call<CheckoutResponse> call, Response<CheckoutResponse> response) {
                 if(response.isSuccessful()){
+
+                        Toast.makeText(context, "Checkout successful", Toast.LENGTH_LONG).show();
                     reset_products();
 
                 }
