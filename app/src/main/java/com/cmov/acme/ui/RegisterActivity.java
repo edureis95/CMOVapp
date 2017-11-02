@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.cmov.acme.R;
 import com.cmov.acme.api.model.request.RegisterRequest;
@@ -59,13 +60,13 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
 
         input_name = (EditText) findViewById(R.id.input_name);
-        input_username = (EditText) findViewById(R.id.input_username);;
-        input_password = (EditText) findViewById(R.id.input_password);;
-        input_nif = (EditText) findViewById(R.id.input_nif);;
-        input_address = (EditText) findViewById(R.id.input_address);;
-        input_creditcardnumber = (EditText) findViewById(R.id.input_creditcardnumber);;
-        input_creditcardtype = (EditText) findViewById(R.id.input_creditcardtype);;
-        input_creditcardvalidity = (EditText) findViewById(R.id.input_creditcardvalidity);;
+        input_username = (EditText) findViewById(R.id.input_username);
+        input_password = (EditText) findViewById(R.id.input_password);
+        input_nif = (EditText) findViewById(R.id.input_nif);
+        input_address = (EditText) findViewById(R.id.input_address);
+        input_creditcardnumber = (EditText) findViewById(R.id.input_creditcardnumber);
+        input_creditcardtype = (EditText) findViewById(R.id.input_creditcardtype);
+        input_creditcardvalidity = (EditText) findViewById(R.id.input_creditcardvalidity);
 
         register_button = (Button)findViewById(R.id.register_button);
         register_button.setOnClickListener(new View.OnClickListener(){

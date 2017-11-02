@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/shopping_cart"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_camera"
             android:title="Shopping Cart" />
         <item
             android:id="@+id/past_transactions"
@@ -13,10 +13,11 @@
         <item
             android:id="@+id/account"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Account" />
+            android:title="Account"
+            android:visible="false" />
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@android:drawable/ic_lock_power_off"
             android:title="Logout" />
     </group>
 
