@@ -12,11 +12,17 @@ public class ReceiptResponse {
     private String receipt_id;
     @SerializedName("receipt_date")
     private String receipt_date;
+    @SerializedName("token")
+    private String token;
 
-    public ReceiptResponse(String receipt_id, String receipt_date) {
+    public ReceiptResponse(String receipt_id, String receipt_date, String token) {
         this.receipt_id = receipt_id;
         this.receipt_date = receipt_date;
+        this.token = token;
+    }
 
+    public String getToken() {
+        return token;
     }
 
     public String getReceipt_date() {
