@@ -37,6 +37,8 @@ import com.cmov.acme.R;
 import com.cmov.acme.singletons.User;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.security.SignatureException;
+
 public class ShoppingCartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,7 +78,11 @@ public class ShoppingCartActivity extends AppCompatActivity
         checkout_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
-                adapter.make_purchase();
+                try {
+                    adapter.make_purchase();
+                } catch (SignatureException e) {
+                    e.printStackTrace();
+                }
 
             }
         });

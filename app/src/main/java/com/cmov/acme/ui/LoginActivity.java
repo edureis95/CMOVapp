@@ -19,6 +19,8 @@ import com.cmov.acme.singletons.User;
 import com.cmov.acme.utils.Keygenerator;
 import com.cmov.acme.utils.ShowDialog;
 
+import java.security.KeyPair;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private View login;
     private String publicKey;
     private String privateKey;
+    private KeyPair kp;
     private Button register_button;
 
 
@@ -74,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
             Keygenerator gen = new Keygenerator();
             publicKey = gen.getPublicKey();
             privateKey = gen.getPrivateKey();
+            kp = gen.getKeyPair();
+
 
             LoginRequest request = new LoginRequest(username_text.getText().toString(),password_text.getText().toString(),publicKey);
             Call<LoginResponse> call = loginService.sendLogin(request);
@@ -86,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                         User user =  User.getInstance();
                         user.setToken(response.body().getToken());
                         user.setKeyPair(publicKey, privateKey);
+                        user.setKp(kp);
                         Intent intent = new Intent(LoginActivity.this, ShoppingCartActivity.class);
                         startActivity(intent);
                         finish();

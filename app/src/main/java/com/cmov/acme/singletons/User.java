@@ -11,6 +11,15 @@ public class User {
     private String token;
     private String privateKey;
     private String publicKey;
+    private KeyPair keypair;
+
+    public KeyPair getKp() {
+        return keypair;
+    }
+
+    public void setKp(KeyPair keypair) {
+        this.keypair = keypair;
+    }
 
     protected User() {
         // Exists only to defeat instantiation.
