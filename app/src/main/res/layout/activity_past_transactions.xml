@@ -33,12 +33,11 @@
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="340dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/text_compra"
-            android:layout_marginTop="24dp"
             tools:layout_editor_absoluteX="7dp"
-            tools:layout_editor_absoluteY="333dp" />
+            tools:layout_editor_absoluteY="333dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/text_compra"
@@ -52,6 +51,21 @@
             android:textSize="24sp"
             tools:layout_editor_absoluteX="134dp"
             tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/text_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Token"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            tools:layout_editor_absoluteX="134dp"
+            tools:layout_editor_absoluteY="16dp"
+            android:layout_above="@+id/listview"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp" />
 
         <TextView
             android:id="@+id/text_price"

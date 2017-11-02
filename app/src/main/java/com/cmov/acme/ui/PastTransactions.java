@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ public class PastTransactions extends AppCompatActivity  implements NavigationVi
     private ListView listView;
     private String date;
     private String id;
+    private String token;
     private TextView totalPrice;
     private ProgressBar progressBar;
     private View transactionsview;
@@ -56,6 +58,7 @@ public class PastTransactions extends AppCompatActivity  implements NavigationVi
         if (extras != null) {
             date = extras.getString("date");
             id = extras.getString("id");
+            token = extras.getString("token");
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,6 +82,10 @@ public class PastTransactions extends AppCompatActivity  implements NavigationVi
 
         TextView name = (TextView) findViewById(R.id.text_compra);
         name.setText(date);
+        TextView token_text = (TextView) findViewById(R.id.text_token);
+        token_text.setText(token);
+
+
 
         totalPrice = (TextView) findViewById(R.id.text_price);
 

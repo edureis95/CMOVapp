@@ -76,7 +76,7 @@ public class ReceiptsActivity extends AppCompatActivity implements NavigationVie
                     showProgress(false);
                 } else {
                     Toast.makeText(ReceiptsActivity.this,response.message(), Toast.LENGTH_LONG).show();
-                    showProgress(false);
+                    finish();
                 }
             }
 

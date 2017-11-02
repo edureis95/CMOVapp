@@ -19,6 +19,7 @@
     <string name="title_activity_drawer">DrawerActivity</string>
     <item type="id" name="id" />
     <item type="id" name="date" />
+    <item type="id" name="token" />
     <item name="visible" type="id"/>
     <item name="masked" type="id"/>
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class ReceiptAdapter extends ArrayAdapter<ReceiptResponse> {
         button.setOnClickListener(handler);
         button.setTag(R.id.date,newstring);
         button.setTag(R.id.id,itemPosition.getReceipt_id());
+        button.setTag(R.id.token,itemPosition.getToken());
         return convertView;
     }
 
@@ -72,6 +74,7 @@ public class ReceiptAdapter extends ArrayAdapter<ReceiptResponse> {
             Intent intent = new Intent(context, PastTransactions.class);
             intent.putExtra("date",v.getTag(R.id.date).toString());
             intent.putExtra("id",v.getTag(R.id.id).toString());
+            intent.putExtra("token",v.getTag(R.id.token).toString());
             context.startActivity(intent);
             }};
 
