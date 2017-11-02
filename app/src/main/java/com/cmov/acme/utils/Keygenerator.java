@@ -17,6 +17,7 @@ public class Keygenerator {
 
     private String publicKey;
     private String privateKey;
+    private KeyPair kp;
 
     public Keygenerator() {
         KeyPairGenerator kgen = null;  //RSA keys
@@ -25,7 +26,7 @@ public class Keygenerator {
         try {
             kgen = KeyPairGenerator.getInstance("RSA");
             kgen.initialize(368);
-            KeyPair kp = kgen.generateKeyPair();
+            kp = kgen.generateKeyPair();
             pri = kp.getPrivate();                             // private key in a Java class
             pub = kp.getPublic();//size in bits
         } catch (NoSuchAlgorithmException e) {
@@ -54,6 +55,10 @@ public class Keygenerator {
             e.printStackTrace();
         }
 
+    }
+
+    public KeyPair getKeyPair() {
+        return kp;
     }
 
     public String getPublicKey() {

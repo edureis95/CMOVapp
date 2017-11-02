@@ -20,6 +20,7 @@ import com.cmov.acme.singletons.User;
 import com.cmov.acme.utils.Keygenerator;
 import com.cmov.acme.utils.ShowDialog;
 
+import java.security.KeyPair;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -45,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private String publicKey;
     private String privateKey;
+    private KeyPair kp;
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
 
@@ -78,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Keygenerator gen = new Keygenerator();
                 publicKey = gen.getPublicKey();
                 privateKey = gen.getPrivateKey();
+                kp = gen.getKeyPair();
                 RegisterRequest request = new RegisterRequest(input_name.getText().toString()
                         ,input_username.getText().toString(),input_password.getText().toString(),input_nif.getText().toString()
                         ,input_address.getText().toString(),publicKey,input_creditcardnumber.getText().toString(),input_creditcardtype.getText().toString(),
@@ -94,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                             User user =  User.getInstance();
                             user.setKeyPair(publicKey, privateKey);
                             user.setToken(response.body().getToken());
+                            user.setKp(kp);
                             Intent intent = new Intent(RegisterActivity.this, ShoppingCartActivity.class);
                             startActivity(intent);
                             finish();

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +30,16 @@ import com.cmov.acme.singletons.RetrofitSingleton;
 import com.cmov.acme.singletons.User;
 import com.cmov.acme.ui.RegisterActivity;
 import com.cmov.acme.ui.ShoppingCartActivity;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.w3c.dom.Text;
 
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +47,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static android.R.id.input;
 
 public class ProductAdapter extends ArrayAdapter<Product>{
 
@@ -179,7 +189,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
 
     }
 
-    public void make_purchase(){
+    public void make_purchase() throws SignatureException {
 
         if(products.isEmpty()){
             Toast.makeText(context, "Shopping cart empty", Toast.LENGTH_LONG).show();
@@ -195,8 +205,31 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             purchases.add(request);
         }
 
+        KeyPair key = User.getInstance().getKp();
 
-        Call<CheckoutResponse> call = checkout_service.sendPurchase("Bearer " + User.getInstance().getToken(), purchases);
+        String json = new Gson().toJson(purchases);
+
+        Signature sg = null;          // for signing with the stated algorithm
+        try {
+            sg = Signature.getInstance("SHA1WithRSA");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        try {
+            sg.initSign(key.getPrivate());                                             // supply the private key
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        try {
+            sg.update(json.getBytes());                                             // define the data to sign
+        } catch (SignatureException e) {
+            e.printStackTrace();
+        }
+        byte[] output = sg.sign();
+
+        Call<CheckoutResponse> call = checkout_service.sendPurchase(new String(Base64.encode(output, Base64.DEFAULT)).trim(),"Bearer " + User.getInstance().getToken(), purchases);
+
+
 
         call.enqueue(new Callback<CheckoutResponse>() {
             @Override
@@ -206,14 +239,14 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                     reset_products();
                 }
                 else{
-                    Log.i("Teste", response.message());
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<CheckoutResponse> call, Throwable t) {
-                Log.i("Teste", "FAILED");
+                Toast.makeText(context, t.toString(), Toast.LENGTH_LONG).show();
             }
         });
 

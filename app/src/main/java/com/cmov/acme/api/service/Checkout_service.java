@@ -18,5 +18,5 @@ import retrofit2.http.POST;
 
 public interface Checkout_service {
     @POST("/purchase")
-    Call<CheckoutResponse> sendPurchase(@Header("Authorization") String token, @Body List<CheckoutRequest> body);
+    Call<CheckoutResponse> sendPurchase(@Header("Signature") String sign, @Header("Authorization") String token, @Body List<CheckoutRequest> body);
 }
