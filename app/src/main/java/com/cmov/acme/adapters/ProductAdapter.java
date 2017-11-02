@@ -202,10 +202,8 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             @Override
             public void onResponse(Call<CheckoutResponse> call, Response<CheckoutResponse> response) {
                 if(response.isSuccessful()){
-
-                        Toast.makeText(context, "Checkout successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Checkout successful", Toast.LENGTH_LONG).show();
                     reset_products();
-
                 }
                 else{
                     Log.i("Teste", response.message());
