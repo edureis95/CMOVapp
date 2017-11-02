@@ -126,6 +126,7 @@ public class ShoppingCartActivity extends AppCompatActivity
          if (requestCode == 1 && resultCode == RESULT_OK){
              Bundle bundle = data.getExtras();
              Product product = (Product) bundle.getSerializable("Product");
+
              adapter.addProduct(product);
              adapter.addCost(product);
              setTotalCost(adapter.getTotal_cost());
