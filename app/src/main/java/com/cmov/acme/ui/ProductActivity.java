@@ -40,6 +40,7 @@ public class ProductActivity extends AppCompatActivity {
     private TextView maker;
     private TextView model;
     private Button addCart;
+    private Button back;
     private String bar_code;
     private View productlayout;
     private ProgressBar progressBar;
@@ -63,24 +64,43 @@ public class ProductActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         getProductContent(intent.getStringExtra("bar_code"));
+        boolean isOnList = intent.getBooleanExtra("isOnList", false);
 
-
+        back = (Button)findViewById(R.id.back_button);
         addCart = (Button)findViewById(R.id.button_add_product);
-        addCart.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
-                Intent intent = new Intent();
-                if(product != null){
-                    intent.putExtra("Product", product);
-                    setResult(RESULT_OK, intent);
+
+        Log.i("TESTE", Boolean.toString(isOnList));
+
+        if(isOnList){
+            addCart.setVisibility(View.GONE);
+            back.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
+                    Intent intent = new Intent(ProductActivity.this, ShoppingCartActivity.class);
+                    startActivity(intent);
                     finish();
                 }
-                else{
-                    Toast.makeText(ProductActivity.this, "Error adding product", Toast.LENGTH_LONG).show();
-                }
+            });
+        }
+        else{
+            back.setVisibility(View.GONE);
+            addCart.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
+                    Intent intent = new Intent();
+                    if(product != null){
+                        intent.putExtra("Product", product);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(ProductActivity.this, "Error adding product", Toast.LENGTH_LONG).show();
+                    }
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
 

@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -83,6 +84,13 @@ public class ShoppingCartActivity extends AppCompatActivity
         ListView productListView = (ListView) findViewById(R.id.product_list_view);
         productListView.setAdapter(adapter);
 
+        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                submitBarcode(adapter.getItem(i).getBar_code(), true);
+            }
+        });
+
         insert_barcode.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
@@ -141,11 +149,12 @@ public class ShoppingCartActivity extends AppCompatActivity
         }
     }
 
-    public void submitBarcode(String barcode){
+    public void submitBarcode(String barcode, boolean isOnList){
         Log.i("TESTE", "trying to submit barcode: " + barcode);
         dialog.dismissAllowingStateLoss();
         Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
         intent.putExtra("bar_code", barcode);
+        intent.putExtra("isOnList", isOnList);
         startActivityForResult(intent, 1);
     }
 
@@ -167,9 +176,7 @@ public class ShoppingCartActivity extends AppCompatActivity
                      Toast.makeText(this, "Scanning cancelled", Toast.LENGTH_LONG).show();
                  }
                  else{
-                     Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
-                     intent.putExtra("bar_code", result.getContents().toString());
-                     startActivityForResult(intent, 1);
+                     submitBarcode(result.getContents().toString(), false);
                  }
              }
              else{

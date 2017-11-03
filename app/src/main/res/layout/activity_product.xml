@@ -16,13 +16,14 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/productlayout"
         android:layout_width="368dp"
         android:layout_height="495dp"
-        android:visibility="gone"
+
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
@@ -119,5 +120,18 @@
             android:layout_marginBottom="38dp"
             android:layout_toRightOf="@+id/textView12"
             android:text="Add To Cart" />
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/button_add_product"
+            android:layout_alignBottom="@+id/button_add_product"
+            android:layout_alignLeft="@+id/button_add_product"
+            android:layout_alignStart="@+id/button_add_product"
+            android:layout_alignParentBottom="true"
+            android:text="Back" />
+
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
