@@ -18,7 +18,7 @@ import com.cmov.acme.api.service.Register_service;
 import com.cmov.acme.singletons.RetrofitSingleton;
 import com.cmov.acme.singletons.User;
 import com.cmov.acme.utils.Keygenerator;
-import com.cmov.acme.utils.ShowDialog;
+
 
 import java.security.KeyPair;
 import java.text.SimpleDateFormat;

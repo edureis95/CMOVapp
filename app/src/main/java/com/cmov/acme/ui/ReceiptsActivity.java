@@ -21,7 +21,7 @@ import com.cmov.acme.api.model.response.ReceiptResponse;
 import com.cmov.acme.api.service.Receipts_service;
 import com.cmov.acme.singletons.RetrofitSingleton;
 import com.cmov.acme.singletons.User;
-import com.cmov.acme.utils.ShowDialog;
+
 
 import java.util.ArrayList;
 
