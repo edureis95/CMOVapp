@@ -17,6 +17,7 @@ import static android.nfc.NdefRecord.createMime;
 public class NFC_send extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
     NfcAdapter mNfcAdapter;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +29,17 @@ public class NFC_send extends AppCompatActivity implements NfcAdapter.CreateNdef
             finish();
             return;
         }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            token = extras.getString("token");
+        }
         // Register callback
         mNfcAdapter.setNdefPushMessageCallback(this, this);
     }
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
-        String text = ("Beam me up, Android!\n\n" +
-                "Beam Time: " + System.currentTimeMillis());
+        String text = (token);
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { createMime(
                         "application/nfc.mime", text.getBytes())
