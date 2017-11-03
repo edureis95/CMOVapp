@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteX="5dp"
+    tools:layout_editor_absoluteY="9dp"
+    android:paddingBottom="4dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.cmov.acme.ui.ShoppingCartActivity"
     tools:showIn="@layout/app_bar_drawer">
-
-    <RelativeLayout
-        android:layout_width="374dp"
-        android:layout_height="492dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="9dp">
 
         <ListView
             android:id="@+id/product_list_view"
@@ -22,83 +19,91 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView"
             android:layout_marginTop="40dp"
             tools:layout_editor_absoluteX="7dp"
             tools:layout_editor_absoluteY="333dp" />
 
-        <Button
-            android:id="@+id/scan_button"
-            android:layout_width="88dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/insert_barcode"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/insert_barcode"
-            android:layout_marginBottom="19dp"
-            android:background="#55ff00"
-            android:text="Scan"
-            tools:layout_editor_absoluteX="148dp"
-            tools:layout_editor_absoluteY="120dp" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/list_total_cost"
-            android:layout_alignBottom="@+id/list_total_cost"
-            android:layout_toLeftOf="@+id/list_total_cost"
-            android:layout_toStartOf="@+id/list_total_cost"
-            android:text="Total: "
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/list_total_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/insert_barcode"
-            android:layout_alignBottom="@+id/insert_barcode"
-            android:layout_alignEnd="@+id/checkout_button"
-            android:layout_alignRight="@+id/checkout_button"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:text="TextView"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/list_total_cost"
-            android:layout_alignBottom="@+id/list_total_cost"
-            android:layout_alignEnd="@+id/checkout_button"
-            android:layout_alignRight="@+id/checkout_button"
-            android:text="  €"
-            android:textSize="18sp" />
-
-        <Button
+    <Button
             android:id="@+id/checkout_button"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/scan_button"
-            android:layout_alignBottom="@+id/scan_button"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="31dp"
-            android:layout_marginRight="31dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
             android:background="#ff3333"
-            android:text="Checkout" />
+            android:text="Checkout"
+        android:layout_centerHorizontal="true"
+        />
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkout_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
+        android:id="@+id/linear_scan_barcode">
 
         <Button
             android:id="@+id/insert_barcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/scan_button"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="31dp"
-            android:layout_marginStart="31dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
             android:background="#55ff00"
             android:text="Barcode" />
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/scan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/checkout_button"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:background="#55ff00"
+            android:text="Scan" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linear_scan_barcode"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_centerHorizontal="true"
+        >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: "
+            android:textSize="18sp" />
+
+        <TextView
+        android:id="@+id/list_total_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/list_total_cost"
+            android:text="  €"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
