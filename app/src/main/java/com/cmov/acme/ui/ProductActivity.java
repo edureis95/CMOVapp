@@ -69,7 +69,6 @@ public class ProductActivity extends AppCompatActivity {
         back = (Button)findViewById(R.id.back_button);
         addCart = (Button)findViewById(R.id.button_add_product);
 
-        Log.i("TESTE", Boolean.toString(isOnList));
 
         if(isOnList){
             addCart.setVisibility(View.GONE);
@@ -83,7 +82,6 @@ public class ProductActivity extends AppCompatActivity {
             });
         }
         else{
-            back.setVisibility(View.GONE);
             addCart.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
