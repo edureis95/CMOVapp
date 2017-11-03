@@ -2,6 +2,7 @@ package com.cmov.acme.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +34,7 @@ import com.cmov.acme.adapters.ProductAdapter;
 import com.cmov.acme.models.Product;
 import com.cmov.acme.models.ProductList;
 import com.cmov.acme.singletons.User;
+import com.cmov.acme.utils.ShowDialogFragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import com.cmov.acme.R;
@@ -43,9 +47,11 @@ public class ShoppingCartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Button scan_button;
+    private Button insert_barcode;
     private Button checkout_button;
     private ProductAdapter adapter = null;
     private TextView total_cost;
+    private FragmentManager fm = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,7 @@ public class ShoppingCartActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         scan_button = (Button) findViewById(R.id.scan_button);
+        insert_barcode = (Button) findViewById(R.id.insert_barcode);
         checkout_button = (Button) findViewById(R.id.checkout_button);
         total_cost = (TextView) findViewById(R.id.list_total_cost);
         total_cost.setText("0");
@@ -75,15 +82,11 @@ public class ShoppingCartActivity extends AppCompatActivity
         ListView productListView = (ListView) findViewById(R.id.product_list_view);
         productListView.setAdapter(adapter);
 
-        checkout_button.setOnClickListener(new View.OnClickListener(){
+        insert_barcode.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
-                try {
-                    adapter.make_purchase();
-                } catch (SignatureException e) {
-                    e.printStackTrace();
-                }
-
+                ShowDialogFragment dialog = new ShowDialogFragment();
+                dialog.show(fm, "InputBarcode");
             }
         });
 
@@ -107,6 +110,18 @@ public class ShoppingCartActivity extends AppCompatActivity
                     IntentIntegrator integrator = new IntentIntegrator(activity);
                     integrator.initiateScan();
                 }
+            }
+        });
+
+        checkout_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
+                try {
+                    adapter.make_purchase();
+                } catch (SignatureException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
