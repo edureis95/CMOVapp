@@ -96,6 +96,7 @@
             android:layout_alignBottom="@+id/list_product_price"
             android:layout_alignLeft="@+id/button_add"
             android:layout_alignStart="@+id/button_add"
+            android:layout_marginLeft="6dp"
             android:text="Quantity:" />
 
         <TextView
