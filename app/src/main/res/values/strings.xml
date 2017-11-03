@@ -17,11 +17,11 @@
     <string name="barCode">bar_code</string>
     <string name="title_activity_login33">Sign in</string>
     <string name="title_activity_drawer">DrawerActivity</string>
-    <item type="id" name="id" />
-    <item type="id" name="date" />
-    <item type="id" name="token" />
-    <item name="visible" type="id"/>
-    <item name="masked" type="id"/>
+    <item name="id" type="id" />
+    <item name="date" type="id" />
+    <item name="token" type="id" />
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
