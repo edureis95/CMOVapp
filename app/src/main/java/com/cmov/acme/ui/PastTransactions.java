@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class PastTransactions extends AppCompatActivity  implements NavigationVi
     private TextView totalPrice;
     private ProgressBar progressBar;
     private View transactionsview;
+    private Button print;
 
 
     @Override
@@ -63,6 +65,8 @@ public class PastTransactions extends AppCompatActivity  implements NavigationVi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        print = (Button) findViewById(R.id.print_button);
+        print.setOnClickListener(printHandler);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -128,6 +132,14 @@ public class PastTransactions extends AppCompatActivity  implements NavigationVi
 
     }
 
+
+    View.OnClickListener printHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            Intent intent = new Intent(PastTransactions.this, NFC_send.class);
+            intent.putExtra("token", token);
+            startActivity(intent);
+        }
+    };
 
     private void showProgress(final boolean show) {
         transactionsview.setVisibility(show ? View.GONE : View.VISIBLE);
