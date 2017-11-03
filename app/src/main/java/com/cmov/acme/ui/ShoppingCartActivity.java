@@ -52,6 +52,7 @@ public class ShoppingCartActivity extends AppCompatActivity
     private ProductAdapter adapter = null;
     private TextView total_cost;
     private FragmentManager fm = getSupportFragmentManager();
+    private ShowDialogFragment dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,7 @@ public class ShoppingCartActivity extends AppCompatActivity
         insert_barcode.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
-                ShowDialogFragment dialog = new ShowDialogFragment();
+                dialog = new ShowDialogFragment();
                 dialog.show(fm, "InputBarcode");
             }
         });
@@ -140,6 +141,13 @@ public class ShoppingCartActivity extends AppCompatActivity
         }
     }
 
+    public void submitBarcode(String barcode){
+        Log.i("TESTE", "trying to submit barcode: " + barcode);
+        dialog.dismissAllowingStateLoss();
+        Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
+        intent.putExtra("bar_code", barcode);
+        startActivityForResult(intent, 1);
+    }
 
 
      @Override

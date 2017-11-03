@@ -33,6 +33,8 @@ public class ShowDialogFragment extends DialogFragment {
                 if(!barcode_input.getText().toString().isEmpty()){
                     //open products page with the bar code
                     Toast.makeText(getActivity(), "Submitted barcode", Toast.LENGTH_LONG).show();
+                    ShoppingCartActivity activity = (ShoppingCartActivity) getActivity();
+                    activity.submitBarcode(barcode_input.getText().toString());
                 }
                 else{
                     Toast.makeText(getActivity(), "Please, insert the product barcode ", Toast.LENGTH_LONG).show();
