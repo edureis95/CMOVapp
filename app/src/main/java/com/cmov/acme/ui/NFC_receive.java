@@ -13,13 +13,15 @@ import android.widget.Toast;
 
 import com.cmov.acme.R;
 import com.cmov.acme.adapters.PrinterAdapter;
-import com.cmov.acme.adapters.ReceiptAdapter;
+import com.cmov.acme.api.model.response.PastTransactionsResponse;
 import com.cmov.acme.api.model.response.PrinterResponse;
-import com.cmov.acme.api.model.response.ReceiptResponse;
 import com.cmov.acme.api.service.Printer_Service;
 import com.cmov.acme.singletons.RetrofitSingleton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,7 +30,12 @@ import retrofit2.Retrofit;
 
 public class NFC_receive extends AppCompatActivity {
 
-    private TextView textview;
+    private TextView token_text;
+    private TextView name_text;
+    private TextView address_text;
+    private TextView total_price;
+    private TextView date_text;
+    private TextView nif_text;
     private Retrofit retrofit;
     private ListView listView;
 
@@ -36,9 +43,14 @@ public class NFC_receive extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_receive);
-        textview = (TextView) findViewById(R.id.textView7);
+        token_text = (TextView) findViewById(R.id.token_text);
+        total_price = (TextView) findViewById(R.id.total_price);
         retrofit = RetrofitSingleton.getInstance();
         listView = (ListView) findViewById(R.id.listview);
+        nif_text = (TextView) findViewById(R.id.nif_text);
+        date_text = (TextView) findViewById(R.id.date_text);
+        address_text = (TextView) findViewById(R.id.address_text);
+        name_text = (TextView) findViewById(R.id.name_text);
     }
 
 
@@ -67,7 +79,7 @@ public class NFC_receive extends AppCompatActivity {
         // only one message sent during the beam
         NdefMessage msg = (NdefMessage) rawMsgs[0];
         // record 0 contains the MIME type, record 1 is the AAR, if present
-        textview.setText(new String(msg.getRecords()[0].getPayload()));
+        token_text.setText(new String(msg.getRecords()[0].getPayload()));
 
 
         Printer_Service printer_service = retrofit.create(Printer_Service.class);
@@ -79,6 +91,29 @@ public class NFC_receive extends AppCompatActivity {
             public void onResponse(Call<ArrayList<PrinterResponse>> call, Response<ArrayList<PrinterResponse>> response) {
                 if(response.isSuccessful() ) {
                     ArrayList<PrinterResponse> listaResposta = response.body();
+
+
+                    String oldstring = listaResposta.get(0).getReceipt_date();
+                    Date newDate = null;
+                    String newstring = null;
+                    try {
+                        newDate = new SimpleDateFormat("yyyy-MM-dd").parse(oldstring);
+                        newstring = new SimpleDateFormat("EEE, MMM d, ''yy").format(newDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    date_text.setText(newstring);
+                    name_text.setText(listaResposta.get(0).getUser_name());
+                    nif_text.setText(listaResposta.get(0).getNif());
+                    address_text.setText(listaResposta.get(0).getAddress());
+
+                    double price = 0;
+                    for(PrinterResponse r : listaResposta) {
+                        price += r.getPrice()*r.getQuantity();
+                    }
+                    total_price.setText("Total Price: " + price+"€");
+
+
                     PrinterAdapter adapter = new PrinterAdapter(NFC_receive.this, listaResposta);
                     listView.setAdapter(adapter);
 

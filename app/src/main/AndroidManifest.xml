@@ -43,7 +43,7 @@
             android:name=".ui.ShoppingCartActivity"
             android:label="Shopping Cart"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.NFC_receive">
+        <activity android:name=".ui.NFC_receive"  android:label="Printer">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -52,7 +52,7 @@
                 <data android:mimeType="application/nfc.mime" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.NFC_send"></activity>
+        <activity android:name=".ui.NFC_send" android:label="Send token"></activity>
     </application>
 
 </manifest>
