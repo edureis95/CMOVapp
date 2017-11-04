@@ -80,6 +80,16 @@
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/print_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Print"
+            android:layout_alignBaseline="@+id/text_price"
+            android:layout_alignBottom="@+id/text_price"
+            android:layout_alignLeft="@+id/text_token"
+            android:layout_alignStart="@+id/text_token" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
