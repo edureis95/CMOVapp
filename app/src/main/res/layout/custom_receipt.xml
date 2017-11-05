@@ -61,6 +61,7 @@
             android:text="More info"
             app:layout_constraintLeft_toRightOf="@+id/text_recibo"
             android:layout_marginLeft="20dp"
+            android:background="#ff3333"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="24dp" />
     </android.support.constraint.ConstraintLayout>

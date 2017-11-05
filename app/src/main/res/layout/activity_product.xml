@@ -36,7 +36,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginTop="2dp"
-            android:background="#55ff00"
+            android:background="#555655"
             android:text="Back" />
 
         <RelativeLayout

@@ -11,17 +11,17 @@
     tools:context="com.cmov.acme.ui.ShoppingCartActivity"
     tools:showIn="@layout/app_bar_drawer">
 
-        <ListView
-            android:id="@+id/product_list_view"
-            android:layout_width="385dp"
-            android:layout_height="186dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="40dp"
-            tools:layout_editor_absoluteX="7dp"
-            tools:layout_editor_absoluteY="333dp" />
+    <ListView
+        android:id="@+id/product_list_view"
+        android:layout_width="385dp"
+        android:layout_height="300dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="333dp" />
 
 
     <Button

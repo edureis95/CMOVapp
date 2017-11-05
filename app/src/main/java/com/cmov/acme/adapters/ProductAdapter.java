@@ -90,10 +90,10 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         int product_price = getItem(position).getPrice();
 
 
-        list_product_model = (TextView) custom_view.findViewById(R.id.list_product_model);
-        product_quantity = (TextView)  custom_view.findViewById(R.id.product_quantity);
-        list_product_name = (TextView) custom_view.findViewById(R.id.list_product_name);
-        list_product_price = (TextView) custom_view.findViewById(R.id.list_product_price);
+        list_product_model = custom_view.findViewById(R.id.list_product_model);
+        product_quantity =  custom_view.findViewById(R.id.product_quantity);
+        list_product_name =  custom_view.findViewById(R.id.list_product_name);
+        list_product_price =  custom_view.findViewById(R.id.list_product_price);
 
         product_quantity.setText(Integer.toString(products.get(position).getQuantity()));
 
@@ -103,14 +103,14 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         list_product_model.setText(product_model);
 
 
-        button_delete = (Button)custom_view.findViewById(R.id.button_delete);
+        button_delete = custom_view.findViewById(R.id.button_delete);
         button_delete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 deleteProduct(position);
             }});
 
-        button_add = (Button)custom_view.findViewById(R.id.button_add);
+        button_add = custom_view.findViewById(R.id.button_add);
 
         button_add.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -123,7 +123,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                 notifyDataSetChanged();
             }});
 
-        button_substract = (Button)custom_view.findViewById(R.id.button_subtract);
+        button_substract = custom_view.findViewById(R.id.button_subtract);
         button_substract.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -153,6 +153,8 @@ public class ProductAdapter extends ArrayAdapter<Product>{
                }
             }
         }
+        if(total_cost < 0)
+            total_cost = 0;
 
     }
 
@@ -172,7 +174,6 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             if(products.get(i).getName().equals(product.getName())){
                 products.get(i).addQuantity();
                 ((ShoppingCartActivity)context).setTotalCost(total_cost);
-
                 return;
             }
         }

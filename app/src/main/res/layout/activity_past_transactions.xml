@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.cmov.acme.ui.ShoppingCartActivity"
-    tools:showIn="@layout/past_transactions_drawer">
+    tools:showIn="@layout/past_transactions_drawer"
+    android:layout_marginBottom="4dp">
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -23,18 +24,14 @@
 
     <RelativeLayout
         android:id="@+id/transactionview"
-        android:layout_width="374dp"
-        android:layout_height="492dp"
-        android:visibility="visible"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="9dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
 
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="340dp"
-            tools:layout_editor_absoluteX="7dp"
-            tools:layout_editor_absoluteY="333dp"
+            android:layout_height="300dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -43,40 +40,29 @@
             android:id="@+id/text_compra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
             android:text="Transaction"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp"
-            tools:layout_editor_absoluteX="134dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/text_token"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_below="@+id/text_compra"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
             android:text="Token"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            tools:layout_editor_absoluteX="134dp"
-            tools:layout_editor_absoluteY="16dp"
-            android:layout_above="@+id/listview"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="19dp"
-            android:layout_marginStart="19dp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <TextView
             android:id="@+id/text_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="28dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginRight="64dp"
+            android:layout_above="@+id/print_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp" />
@@ -86,10 +72,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Print"
-            android:layout_alignBaseline="@+id/text_price"
-            android:layout_alignBottom="@+id/text_price"
-            android:layout_alignLeft="@+id/text_token"
-            android:layout_alignStart="@+id/text_token" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="#ff3333"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
