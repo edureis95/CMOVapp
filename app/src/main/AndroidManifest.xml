@@ -44,7 +44,9 @@
             android:label="Shopping Cart"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.NFC_receive"  android:label="Printer">
+        <activity
+            android:name=".ui.NFC_receive"
+            android:label="Printer">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -53,7 +55,10 @@
                 <data android:mimeType="application/nfc.mime" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.NFC_send" android:label="Send token"></activity>
+        <activity
+            android:name=".ui.NFC_send"
+            android:label="Send token" />
+        <activity android:name=".ui.AccountActivity" android:label="Change details"></activity>
     </application>
 
 </manifest>

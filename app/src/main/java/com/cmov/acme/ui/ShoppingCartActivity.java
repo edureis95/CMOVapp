@@ -226,6 +226,8 @@ public class ShoppingCartActivity extends AppCompatActivity
             Intent intent = new Intent(ShoppingCartActivity.this, ReceiptsActivity.class);
             startActivity(intent);
         } else if (id == R.id.account) {
+            Intent intent = new Intent(ShoppingCartActivity.this, AccountActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.logout) {
             User user = User.getInstance();

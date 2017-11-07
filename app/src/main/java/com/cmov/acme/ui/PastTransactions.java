@@ -174,7 +174,9 @@ public class PastTransactions extends AppCompatActivity  implements NavigationVi
             startActivity(intent);
             finish();
         } else if (id == R.id.account) {
-
+            Intent intent = new Intent(PastTransactions.this, AccountActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.logout) {
             User user = User.getInstance();
             user.deleteInstance();
