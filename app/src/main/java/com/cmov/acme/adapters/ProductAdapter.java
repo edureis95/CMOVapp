@@ -174,6 +174,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             if(products.get(i).getName().equals(product.getName())){
                 products.get(i).addQuantity();
                 ((ShoppingCartActivity)context).setTotalCost(total_cost);
+                notifyDataSetChanged();
                 return;
             }
         }

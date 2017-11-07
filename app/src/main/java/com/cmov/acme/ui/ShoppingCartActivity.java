@@ -76,7 +76,7 @@ public class ShoppingCartActivity extends AppCompatActivity
         insert_barcode = (Button) findViewById(R.id.insert_barcode);
         checkout_button = (Button) findViewById(R.id.checkout_button);
         total_cost = (TextView) findViewById(R.id.list_total_cost);
-        total_cost.setText("0");
+
 
         final Activity activity = this;
 
@@ -130,7 +130,6 @@ public class ShoppingCartActivity extends AppCompatActivity
                 } catch (SignatureException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
@@ -150,7 +149,6 @@ public class ShoppingCartActivity extends AppCompatActivity
     }
 
     public void submitBarcode(String barcode, boolean isOnList){
-        Log.i("TESTE", "trying to submit barcode: " + barcode);
         dialog.dismissAllowingStateLoss();
         Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
         intent.putExtra("bar_code", barcode);

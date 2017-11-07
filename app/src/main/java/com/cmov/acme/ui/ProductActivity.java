@@ -69,17 +69,8 @@ public class ProductActivity extends AppCompatActivity {
         back = (Button)findViewById(R.id.back_button);
         addCart = (Button)findViewById(R.id.button_add_product);
 
-
         if(isOnList){
             addCart.setVisibility(View.GONE);
-            back.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
-                    Intent intent = new Intent(ProductActivity.this, ShoppingCartActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
         }
         else{
             addCart.setOnClickListener(new View.OnClickListener(){
@@ -94,10 +85,15 @@ public class ProductActivity extends AppCompatActivity {
                     else{
                         Toast.makeText(ProductActivity.this, "Error adding product", Toast.LENGTH_LONG).show();
                     }
-
                 }
             });
         }
+        back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {   //quando o utilizador clica para comprar, manda produto como resposta
+                finish();
+            }
+        });
 
     }
 
