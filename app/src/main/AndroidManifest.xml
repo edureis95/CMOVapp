@@ -42,6 +42,7 @@
         <activity
             android:name=".ui.ShoppingCartActivity"
             android:label="Shopping Cart"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.NFC_receive"  android:label="Printer">
             <intent-filter>

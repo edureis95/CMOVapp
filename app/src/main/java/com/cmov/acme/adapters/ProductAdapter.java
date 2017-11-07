@@ -66,7 +66,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
     private Button button_substract;
 
     private List<Product> products;
-    private int total_cost=0;
+    private int total_cost = 0;
 
     public ProductAdapter(Context context, int resource, List<Product> products) {
         super(context, resource, products);

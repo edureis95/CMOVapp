@@ -50,7 +50,7 @@ public class ShoppingCartActivity extends AppCompatActivity
     private Button scan_button;
     private Button insert_barcode;
     private Button checkout_button;
-    private ProductAdapter adapter = null;
+    private ProductAdapter adapter;
     private TextView total_cost;
     private FragmentManager fm = getSupportFragmentManager();
     private ShowDialogFragment dialog;
