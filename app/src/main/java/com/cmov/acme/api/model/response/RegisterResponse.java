@@ -10,12 +10,20 @@ public class RegisterResponse {
     @SerializedName("token")
     private String token;
 
+    @SerializedName("message")
+    private String message;
+
+
+    public RegisterResponse(String token, String message) {
+        this.token = token;
+        this.message = message;
+    }
 
     public String getToken() {
         return token;
     }
 
-    public RegisterResponse(String token) {
-        this.token=token;
+    public String getMessage() {
+        return message;
     }
 }

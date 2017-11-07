@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.cmov.acme.R;
 import com.cmov.acme.api.model.request.RegisterRequest;
@@ -29,6 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -92,22 +94,25 @@ public class RegisterActivity extends AppCompatActivity {
                 call.enqueue(new Callback<RegisterResponse>() {
                     @Override
                     public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                        if(response.isSuccessful() && response.body().getToken() != null) {
-
-                            User user =  User.getInstance();
-                            user.setKeyPair(publicKey, privateKey);
-                            user.setToken(response.body().getToken());
-                            user.setKp(kp);
-                            Intent intent = new Intent(RegisterActivity.this, ShoppingCartActivity.class);
-                            startActivity(intent);
-                            finish();
+                        if(response.isSuccessful() ) {
+                            if(response.body().getToken() != null) {
+                                User user = User.getInstance();
+                                user.setKeyPair(publicKey, privateKey);
+                                user.setToken(response.body().getToken());
+                                user.setKp(kp);
+                                Intent intent = new Intent(RegisterActivity.this, ShoppingCartActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } else {
+                            Toast.makeText(RegisterActivity.this,"Invalid data / empty data", Toast.LENGTH_LONG).show();
                             showProgress(false);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                        Toast.makeText(RegisterActivity.this,"Unable to connect to server", Toast.LENGTH_LONG).show();
                         showProgress(false);
                     }
                 });
