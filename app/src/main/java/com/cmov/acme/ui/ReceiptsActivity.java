@@ -123,6 +123,9 @@ public class ReceiptsActivity extends AppCompatActivity implements NavigationVie
         } else if (id == R.id.past_transactions) {
 
         } else if (id == R.id.account) {
+            Intent intent = new Intent(ReceiptsActivity.this, AccountActivity.class);
+            startActivity(intent);
+            finish();
 
         } else if (id == R.id.logout) {
             User user = User.getInstance();

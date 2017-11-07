@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cmov.acme.R;
@@ -72,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
         input_creditcardtype = (EditText) findViewById(R.id.input_creditcardtype);
         input_creditcardvalidity = (EditText) findViewById(R.id.input_creditcardvalidity);
 
-        register_button = (Button)findViewById(R.id.register_button);
+        register_button = (Button)findViewById(R.id.change_button);
         register_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

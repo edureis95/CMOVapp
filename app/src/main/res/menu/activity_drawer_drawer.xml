@@ -12,9 +12,9 @@
             android:title="Past Transactions" />
         <item
             android:id="@+id/account"
+            android:enabled="true"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Account"
-            android:visible="false" />
+            android:title="Account" />
         <item
             android:id="@+id/logout"
             android:icon="@android:drawable/ic_lock_power_off"
