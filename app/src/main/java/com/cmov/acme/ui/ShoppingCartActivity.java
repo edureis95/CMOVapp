@@ -76,7 +76,7 @@ public class ShoppingCartActivity extends AppCompatActivity
         insert_barcode = (Button) findViewById(R.id.insert_barcode);
         checkout_button = (Button) findViewById(R.id.checkout_button);
         total_cost = (TextView) findViewById(R.id.list_total_cost);
-
+        total_cost.setText("0");
 
         final Activity activity = this;
 
