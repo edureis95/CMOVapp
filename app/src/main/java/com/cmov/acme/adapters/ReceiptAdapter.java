@@ -47,7 +47,7 @@ public class ReceiptAdapter extends ArrayAdapter<ReceiptResponse> {
         convertView = LayoutInflater.from(this.context).inflate(R.layout.custom_receipt, null);
 
         TextView recibo_id = (TextView) convertView.findViewById(R.id.text_recibo);
-        recibo_id.setText("Transaction nº " + itemPosition.getReceipt_id());
+        //recibo_id.setText("Transaction nº " + itemPosition.getReceipt_id());
 
         TextView date = (TextView) convertView.findViewById(R.id.text_date);
         String oldstring = itemPosition.getReceipt_date();
@@ -59,6 +59,7 @@ public class ReceiptAdapter extends ArrayAdapter<ReceiptResponse> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        recibo_id.setText(newstring);
         date.setText(newstring);
 
         Button button = (Button) convertView.findViewById(R.id.button_ver);

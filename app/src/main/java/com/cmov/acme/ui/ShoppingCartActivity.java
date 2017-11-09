@@ -149,7 +149,9 @@ public class ShoppingCartActivity extends AppCompatActivity
     }
 
     public void submitBarcode(String barcode, boolean isOnList){
-        dialog.dismissAllowingStateLoss();
+        if(dialog != null)
+            dialog.dismissAllowingStateLoss();
+
         Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);
         intent.putExtra("bar_code", barcode);
         intent.putExtra("isOnList", isOnList);
