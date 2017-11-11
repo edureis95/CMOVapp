@@ -29,15 +29,19 @@
             android:label="Login" />
         <activity
             android:name=".ui.RegisterActivity"
-            android:label="Register" />
+            android:label="Register"
+            android:configChanges="keyboardHidden|screenSize"/>
+
         <activity android:name=".ui.ProductActivity" />
         <activity
             android:name=".ui.ReceiptsActivity"
             android:label="Past Transactions"
+            android:configChanges="keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.PastTransactions"
             android:label="Transaction"
+            android:configChanges="keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.ShoppingCartActivity"
@@ -46,6 +50,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.NFC_receive"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Printer">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
