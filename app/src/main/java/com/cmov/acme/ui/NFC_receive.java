@@ -7,7 +7,9 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,8 @@ public class NFC_receive extends AppCompatActivity {
     private TextView nif_text;
     private Retrofit retrofit;
     private ListView listView;
+    private ProgressBar bar;
+    private View layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,14 @@ public class NFC_receive extends AppCompatActivity {
         date_text = (TextView) findViewById(R.id.date_text);
         address_text = (TextView) findViewById(R.id.address_text);
         name_text = (TextView) findViewById(R.id.name_text);
+        layout = findViewById(R.id.layout);
+        bar = (ProgressBar) findViewById(R.id.bar);
+
+    }
+
+    private void showProgress(final boolean show) {
+        bar.setVisibility(show ? View.GONE : View.VISIBLE);
+        layout.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
 
@@ -116,6 +128,7 @@ public class NFC_receive extends AppCompatActivity {
 
                     PrinterAdapter adapter = new PrinterAdapter(NFC_receive.this, listaResposta);
                     listView.setAdapter(adapter);
+                    showProgress(true);
 
                 } else {
                     Toast.makeText(NFC_receive.this,response.message(), Toast.LENGTH_LONG).show();
@@ -125,7 +138,7 @@ public class NFC_receive extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<PrinterResponse>>  call, Throwable t) {
-                Log.i("ERRO - " ,t.getMessage());
+                Toast.makeText(NFC_receive.this,"Unable to connect to server", Toast.LENGTH_LONG).show();
                 finish();
 
             }

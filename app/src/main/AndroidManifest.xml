@@ -50,7 +50,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.NFC_receive"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|screenSize"
             android:label="Printer">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
