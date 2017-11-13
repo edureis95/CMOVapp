@@ -128,10 +128,12 @@ public class ReceiptsActivity extends AppCompatActivity implements NavigationVie
             finish();
 
         } else if (id == R.id.logout) {
-            User user = User.getInstance();
-            user.deleteInstance();
 
             Intent intent = new Intent(ReceiptsActivity.this, LoginActivity.class);
+            if(User.getInstance().getAdapter() != null)
+                User.getInstance().getAdapter().reset_products();
+            User user = User.getInstance();
+            user.deleteInstance();
             startActivity(intent);
             finish();
         }

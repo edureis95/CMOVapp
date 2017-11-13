@@ -79,8 +79,10 @@ public class ShoppingCartActivity extends AppCompatActivity
         total_cost.setText("0");
 
         final Activity activity = this;
+        User user =  User.getInstance();
 
         adapter = new ProductAdapter(this, android.R.layout.simple_list_item_1, ProductList.list_products);
+        user.setAdapter(adapter);
         ListView productListView = (ListView) findViewById(R.id.product_list_view);
         productListView.setAdapter(adapter);
 
@@ -232,10 +234,13 @@ public class ShoppingCartActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.logout) {
+            Intent intent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
+            if(User.getInstance().getAdapter() != null)
+                User.getInstance().getAdapter().reset_products();
+
             User user = User.getInstance();
             user.deleteInstance();
 
-            Intent intent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }

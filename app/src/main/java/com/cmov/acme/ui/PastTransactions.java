@@ -178,10 +178,13 @@ public class PastTransactions extends AppCompatActivity  implements NavigationVi
             startActivity(intent);
             finish();
         } else if (id == R.id.logout) {
+
+            Intent intent = new Intent(PastTransactions.this, LoginActivity.class);
+            if(User.getInstance().getAdapter() != null)
+                User.getInstance().getAdapter().reset_products();
             User user = User.getInstance();
             user.deleteInstance();
 
-            Intent intent = new Intent(PastTransactions.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }

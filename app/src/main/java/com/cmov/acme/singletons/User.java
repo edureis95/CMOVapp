@@ -1,5 +1,7 @@
 package com.cmov.acme.singletons;
 
+import com.cmov.acme.adapters.ProductAdapter;
+
 import java.security.KeyPair;
 
 /**
@@ -12,6 +14,15 @@ public class User {
     private String privateKey;
     private String publicKey;
     private KeyPair keypair;
+    private ProductAdapter adapter;
+
+    public ProductAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(ProductAdapter adapter) {
+        this.adapter = adapter;
+    }
 
     public KeyPair getKp() {
         return keypair;
