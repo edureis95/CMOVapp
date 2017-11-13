@@ -60,7 +60,7 @@ public class ReceiptAdapter extends ArrayAdapter<ReceiptResponse> {
             e.printStackTrace();
         }
         recibo_id.setText(newstring);
-        date.setText(newstring);
+        date.setText("");
 
         Button button = (Button) convertView.findViewById(R.id.button_ver);
         button.setOnClickListener(handler);
